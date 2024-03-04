@@ -1,6 +1,7 @@
 
 const sequelize = require('./index.js')
-
+const User = require('../models/user.model.js')
+const Teacher = require('../models/teacher.model.js')
 
 
 const dbCheck = async()=>{
@@ -21,8 +22,8 @@ const dbSync = async ()=>{
 
     try {
         
-
-
+        await User.sync()
+        await Teacher.sync()
     } catch (error) {
         
     }
