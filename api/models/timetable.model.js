@@ -6,11 +6,11 @@ const Timetable = sequelize.define('timetable', {
 
     date: {
         type: DataTypes.DATEONLY,
-        allowNull: FALSE
+        allowNull: false
     },
     time: {
         type: DataTypes.TIME,
-        allowNull: FALSE
+        allowNull: false
     },
 
 })
