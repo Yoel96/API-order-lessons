@@ -11,4 +11,4 @@ const ClassDate = sequelize.define('classDate', {
     },
 })
 
-module.exports = classDate
+module.exports = ClassDate
