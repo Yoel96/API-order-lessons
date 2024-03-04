@@ -6,19 +6,13 @@ const LessonType = require('../models/lessonType.model.js')
 const Subject = require('../models/subject.model.js')
 const TeacherRatings = require('../models/teacherRatings.model.js')
 const Timetable = require('../models/timetable.model.js')
-const TeacherStudentFavourite = require('../models/teacherStudentFavourite.model.js')
+const TeacherStudentFavourite = require('../models/favouriteTeacherStudent.model.js')
 const ClassDate = require('../models/classDate.model.js')
 const SubjectLessonType = require('../models/subjectLessonType.model.js')
 const TeacherSubject = require('../models/teacherSubject.model.js')
 
-
-
-
 const DBRelationships = async() =>{
-
-
     try {
-
         User.hasOne(Teacher ,{ foreignKey:"user_Id"})
         Teacher.belongsTo(User ,{as:"userId" ,foreignKey:"user_Id"} )
 
@@ -45,12 +39,9 @@ const DBRelationships = async() =>{
        
         Teacher.belongsToMany( Subject,  { through: TeacherSubject , foreignKey:"teacher_id"})
         Subject.belongsToMany( Teacher, { through: TeacherSubject , foreignKey:"subject_id"})
-
-
     } catch (err) {
         throw new Error(err)
     }
-
 }
 
 module.exports= DBRelationships

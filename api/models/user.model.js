@@ -1,18 +1,14 @@
 const { DataTypes } = require('sequelize')
 const sequelize = require('../db/index.js')
 
-
 const User = sequelize.define('user', {
-
     firstName: {
         type: DataTypes.STRING,
         allowNull: false,
-
     },
     lastName: {
         type: DataTypes.STRING,
         allowNull: false,
-
     },
     secondLastName: {
         type: DataTypes.STRING,
@@ -32,8 +28,8 @@ const User = sequelize.define('user', {
         unique: true,
         validate: {
             isEmail: true
-
-        },
+        }}
+        ,
         phone: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -52,11 +48,8 @@ const User = sequelize.define('user', {
             allowNull: false,
         },
 
-
-
-
     }
 
-})
+)
 
 module.exports= User
