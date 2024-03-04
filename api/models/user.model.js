@@ -33,13 +33,14 @@ const User = sequelize.define('user', {
         validate: {
             isEmail: true
 
-        },
+        }}
+        ,
         phone: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
                 notNull: { args: true, msg: "You must enter a phone number" },
-                len: { args: [11, 11], msg: 'The phone number is not valid' },
+                len: { args: [9, 11], msg: 'The phone number is not valid' },
                 isInt: { args: true, msg: "You must enter a phone number" },
             }
         },
@@ -51,12 +52,16 @@ const User = sequelize.define('user', {
             type: DataTypes.STRING,
             allowNull: false,
         },
+        password: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
 
 
 
 
     }
 
-})
+)
 
 module.exports= User

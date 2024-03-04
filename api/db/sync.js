@@ -30,7 +30,7 @@ const dbCheck = async () => {
 const dbSync = async () => {
 
     try {
-        await DBRelationships()
+        
 
         await User.sync({alter:true})
         await Teacher.sync({alter:true})
