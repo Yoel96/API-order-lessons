@@ -1,9 +1,9 @@
 const router = require('express').Router()
 
-const { getAllFavouriteTeachers, createFavouriteTeacher, deleteFavouriteTeacher } = require('../controllers/favouriteTeacherStudent.controller')
+const { getAllFavouriteTeachersStudent, createFavouriteTeacherStudent, deleteFavouriteTeacherStudent } = require('../controllers/favouriteTeacherStudent.controller')
 
-router.get('/:student_id', getAllFavouriteTeachers )
-router.post('/', createFavouriteTeacher)
-router.delete('/:teacher_id', deleteFavouriteTeacher)
+router.get('/:student_id', getAllFavouriteTeachersStudent)
+router.post('/', createFavouriteTeacherStudent)
+router.delete('/:teacher_id', deleteFavouriteTeacherStudent)
 
 module.exports = router

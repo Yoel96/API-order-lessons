@@ -1,7 +1,7 @@
 const Teacher = require('../models/teacher.model')
 const User = require('../models/user.model')
 
-async function getAllFavouriteTeachers(req, res) {
+async function getAllFavouriteTeachersStudent(req, res) {
     try {
         const student = await User.findByPk(req.params.student_id)
         const favouriteTeachers = await student.getTeacher()
@@ -17,7 +17,7 @@ async function getAllFavouriteTeachers(req, res) {
     }
 }
 
-async function createFavouriteTeacher(req, res) {
+async function createFavouriteTeacherStudent(req, res) {
     try {
         const student = await User.findByPk(req.body.student_id)
         const teacher = await Teacher.findOne({
@@ -34,7 +34,7 @@ async function createFavouriteTeacher(req, res) {
     }
 }
 
-async function deleteFavouriteTeacher(req, res) {
+async function deleteFavouriteTeacherStudent(req, res) {
     try {
         const favourite = await TeacherStudentFavourite.destroy({
             where: {
@@ -52,7 +52,7 @@ async function deleteFavouriteTeacher(req, res) {
 }
 
 module.exports = {
-    getAllFavouriteTeachers,
-    createFavouriteTeacher,
-    deleteFavouriteTeacher
+    getAllFavouriteTeachersStudent,
+    createFavouriteTeacherStudent,
+    deleteFavouriteTeacherStudent
 }
