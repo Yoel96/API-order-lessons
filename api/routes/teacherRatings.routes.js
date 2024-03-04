@@ -9,5 +9,4 @@ router.put('/:id', updateRating)
 router.delete('/:id', deleteRating)
 router.get('/user/:userEmail', getTeacherRatingByEmail) //sirve para mostrar todas las valoraciones de un profesor o un estudiante buscandolo por el email
 
-
 module.exports = router
