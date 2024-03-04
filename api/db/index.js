@@ -6,7 +6,8 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, pr
     {
         host: process.env.DB_HOST,
         port: process.env.DB_PORT,
-        dialect: process.env.DB_DIALECT
+        dialect: process.env.DB_DIALECT,
+        logging: false
     })
 
 

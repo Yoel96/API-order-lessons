@@ -7,7 +7,7 @@ const {dbSync, dbCheck} = require('./api/db/sync')
 
 
 const startServer = async()=>{
-
+app.use(express.json())
     app.listen(process.env.PORT, async (err)=>{
 
         if(err) throw new Error(err)
