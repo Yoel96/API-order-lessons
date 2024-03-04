@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize')
 const sequelize = require('../db/index.js')
 
 
-const Teacher = sequelize.define('teacherInfo', {
+const Teacher = sequelize.define('teacher_info', {
 
     description: {
         type: DataTypes.STRING,

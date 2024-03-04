@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize')
 const sequelize = require('../db')
 
-const TeacherRatings = sequelize.define('teacherRating', {
+const TeacherRatings = sequelize.define('teacher_rating', {
     rating: {
         type: DataTypes.DECIMAL,
         allowNull: false,

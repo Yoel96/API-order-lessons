@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize')
 const sequelize = require('../db')
 
-const ClassDate = sequelize.define('classDate', {
+const ClassDate = sequelize.define('class_date', {
     comments: {
         type: DataTypes.STRING,
         allowNull: false,
