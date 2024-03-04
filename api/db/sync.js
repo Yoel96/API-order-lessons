@@ -14,7 +14,7 @@ const DBRelationships =require('./relationships.js')
 const dbCheck = async () => {
     try {
         await sequelize.authenticate()
-        console.log("Connected to Order Lessonsforce database")
+        console.log("Connected to Order Lessons database")
     }
     catch (err) {
         throw new Error(err)
