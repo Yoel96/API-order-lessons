@@ -9,5 +9,6 @@ router.use('/favouriteTeachers', require('./favouriteTeacherStudent.routes'))
 router.use('/timeTable', require('./timeTable.routes'))
 router.use('/lessonType', require('./lessonType.routes'))
 router.use('/subject', require('./subject.routes'))
+router.use('/teacher', require('./teacher.routes'))
 
 module.exports = router

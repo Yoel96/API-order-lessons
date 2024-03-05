@@ -1,5 +1,5 @@
 const Timetable = require('../models/timetable.model.js')
-
+const Subject= require('../models/subject.model.js')
 async function getAllTimetables(req, res) {
     try {
       if (!Object.values(req.query).length) {
@@ -49,7 +49,6 @@ async function createTimetable(req, res) {
       const teacherTimeTable= await teacher.getTimetables()
 
       for (const timeTable of teacherTimeTable){
-        console.log(timeTable.dataValues)
         if(timeTable.dataValues.date==req.body.date && timeTable.dataValues.time==req.body.time  ){
           return res.status(500).send("That date and time is already created")
 
@@ -71,8 +70,7 @@ async function updateTimetable(req, res) {
       const teacherTimeTable= await teacher.getTimetables()
 
       for (const timeTable of teacherTimeTable){
-        console.log(timeTable.dataValues)
-        if(timeTable.dataValues.date==req.body.date && timeTable.dataValues.time==req.body.time  ){
+         if(timeTable.dataValues.date==req.body.date && timeTable.dataValues.time==req.body.time  ){
           return res.status(500).send("That date and time is already created")
 
         }
@@ -103,7 +101,7 @@ try {
     where: {
         id: req.params.id
     }
-    })
+    }) 
     if (timetable) {
     return res.status(200).json('Timetable deleted')
     } else {
@@ -116,13 +114,19 @@ try {
 
 async function getTimetableBysubject(req, res) { 
   try {
-    const timetable = await Timetable.findByPk(req.params.id)
-
-    if (actor) {
-      return res.status(200).json(timetable)
-    } else {
-      return res.status(404).send('Timetable not found')
+    const subject = await Subject.findByPk(parseInt(req.params.subject_id))
+    if(!subject) return res.status(400).send("Subject not found")
+    const teachers = await subject.getTeacher_infos()
+    if(teachers.length==0) return res.status(400).send("Teacher doesn't has subject")
+    const timeTables= []
+    for(const teacher of teachers){
+      timeTable= await teacher.getTimetables()
+      timeTables.push(timeTable)
     }
+
+    res.status(200).json(timeTables)
+
+ 
   } catch (error) {
     return res.status(500).send(error.message)
   }
@@ -137,5 +141,6 @@ module.exports =  {
     createTimetable,
     updateTimetable,
     deleteTimetable,
+    getTimetableBysubject
 }
 
