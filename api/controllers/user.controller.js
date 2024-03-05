@@ -1,16 +1,35 @@
 const User= require('../models/user.model.js')
 const bcrypt = require('bcrypt')
 
-const getAllUsers= async (req,res)=>{
 
+async function getAllUsers(req, res) {
     try {
-        const users = await User.findAll()
-        if(users) res.status(200).json(users)
+      if (!Object.values(req.query).length) {
+        const user = await User.findAll()
+        
+        if (user) {
+          return res.status(200).json(timetables)
+        } else {
+          return res.status(404).send('No timetables found')
+        }
+      } else {
+        const user = await User.findAll({
+          where: {
+            [Op.and]: [
+              req.query
+            ]
+          }
+        })
+        if (user.length !== 0) {
+          return res.status(200).json(user)
+        } else {
+          return res.status(404).send('No timetable found')
+        }
+      }
     } catch (error) {
-        res.status(500).send("Error getting users")
+      return res.status(500).send(error.message)
     }
-
-}
+  }
 
 
 const getUser= async (req,res)=>{
@@ -45,7 +64,7 @@ const updateUser= async (req,res)=>{
 
             const genSalt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT))
             req.body.password = await  bcrypt.hash(req.body.password, genSalt)
-
+            
         }
 
          const user= await User.update(req.body, {

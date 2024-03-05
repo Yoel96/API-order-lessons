@@ -12,8 +12,12 @@ const signUp = async (req, res)=>{
         const user = await User.create(body)
         const token = jwt.sign({ email:body.email, role: body.role  }, process.env.JWT_SECRET )
         if(body.role==="teacher"){
-            await user.createTeacher_info(req.body.teacherInfo)
+
+            const teacher = await user.createTeacher_info(req.body.teacherInfo)
+            res.locals.teacher=user
         }
+
+        res.locals.user=user
 
         res.status(200).json(token)
 

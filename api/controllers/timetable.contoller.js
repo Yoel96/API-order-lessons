@@ -4,6 +4,7 @@ async function getAllTimetables(req, res) {
     try {
       if (!Object.values(req.query).length) {
         const timetables = await Timetable.findAll()
+        
         if (timetables) {
           return res.status(200).json(timetables)
         } else {
@@ -30,7 +31,7 @@ async function getAllTimetables(req, res) {
 
 async function getOneTimetable(req, res) { //Cambiar por un get subject
     try {
-      const timetable = await Timetable.findByPk(req.params.id)
+      const timetable = await Timetable.findByPK(req.params.id)
   
       if (actor) {
         return res.status(200).json(timetable)
@@ -44,7 +45,19 @@ async function getOneTimetable(req, res) { //Cambiar por un get subject
 
 async function createTimetable(req, res) {
     try {
+      const teacher = await res.locals.user.getTeacher_info()
+      const teacherTimeTable= await teacher.getTimetables()
+
+      for (const timeTable of teacherTimeTable){
+        console.log(timeTable.dataValues)
+        if(timeTable.dataValues.date==req.body.date && timeTable.dataValues.time==req.body.time  ){
+          return res.status(500).send("That date and time is already created")
+
+        }
+      }
+
       const timetable = await Timetable.create(req.body)
+      await teacher.addTimetable(timetable)
       return res.status(200).json({ message: 'Timetable created', timetable: timetable })
     } catch (error) {
       return res.status(500).send(error.message)
@@ -53,12 +66,27 @@ async function createTimetable(req, res) {
 
 async function updateTimetable(req, res) {
     try {
+
+      const teacher = await res.locals.user.getTeacher_info()
+      const teacherTimeTable= await teacher.getTimetables()
+
+      for (const timeTable of teacherTimeTable){
+        console.log(timeTable.dataValues)
+        if(timeTable.dataValues.date==req.body.date && timeTable.dataValues.time==req.body.time  ){
+          return res.status(500).send("That date and time is already created")
+
+        }
+      }
+
       const [timetableExist, timetable] = await Timetable.update(req.body, {
         returning: true,
         where: {
           id: req.params.id
         }
       })
+
+      
+
       if (timetableExist !== 0) {
         return res.status(200).json({ message: 'Timetable updated', timetable: timetable })
       } else {
@@ -107,5 +135,5 @@ module.exports =  {
     getOneTimetable,
     createTimetable,
     updateTimetable,
-    deleteTimetable
+    deleteTimetable,
 }
