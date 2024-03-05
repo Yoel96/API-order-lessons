@@ -28,7 +28,7 @@ async function getAllLessonTypes(req, res) {
     }
   }
 
-async function getOneLessonType(req, res) {
+async function getOneLessonType(req, res) { 
 try {
     const lessonType = await LessonType.findByPk(req.params.id)
 
@@ -42,6 +42,20 @@ try {
 }
 }
 
+async function getOneLessonTypeBySubject(req, res) { 
+  try {
+      const lessonType = await LessonType.findByPk(req.params.id)
+  
+      if (lessonType) {
+      return res.status(200).json(lessonType)
+      } else {
+      return res.status(404).send('LessonType not found')
+      }
+  } catch (error) {
+      return res.status(500).send(error.message)
+  }
+  }
+
 async function createLessonType(req, res) {
     try {
       const lessonType = await LessonType.create(req.body)
@@ -51,7 +65,7 @@ async function createLessonType(req, res) {
     }
   }
 
-  async function updateLessonType(req, res) {
+async function updateLessonType(req, res) {
     try {
       const [lessonTypeExist, lessonType] = await LessonType.update(req.body, {
         returning: true,
@@ -86,9 +100,12 @@ async function deleteLessonType(req, res) {
     }
 }
 
+
+
 module.exports = { 
     getAllLessonTypes,
     getOneLessonType,
+    getOneLessonTypeBySubject,
     createLessonType,
     updateLessonType,
     deleteLessonType,
