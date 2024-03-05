@@ -1,17 +1,19 @@
 require('dotenv').config()
 const express= require('express')
 const {dbSync, dbCheck} = require('./api/db/sync')
+const DBRelationships = require('./api/db/relationships')
+const app= express()
 
+const startServer = async()=>{
 
-const startServer = async () =>{
-    const app = express()
-    .use(express.json())
-    .use('/api', require('./api/routes'))
+    app.use(express.json())
+    app.use('/api', require('./api/routes/index.js'))
+    app.listen(process.env.PORT, async (err)=>{
 
-    .listen(process.env.PORT, async (err)=>{
         if(err) throw new Error(err)
         await dbCheck()
-        await dbSync()
+        await DBRelationships()
+        //await dbSync()
         console.log('*'.repeat(100))
         console.log(`Server listening on port ${process.env.PORT}`)
         console.log('*'.repeat(100))

@@ -28,25 +28,28 @@ const User = sequelize.define('user', {
         unique: true,
         validate: {
             isEmail: true
-        }}
-        ,
-        phone: {
+
+        }},
+    phone: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
                 notNull: { args: true, msg: "You must enter a phone number" },
-                len: { args: [11, 11], msg: 'The phone number is not valid' },
+                len: { args: [9, 11], msg: 'The phone number is not valid' },
                 isInt: { args: true, msg: "You must enter a phone number" },
             }
-        },
-        location: {
+    },
+    location: {
+            type: DataTypes.STRING,
+            allowNull: false,
+    },
+    role: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        role: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
+
+
+
 
     }
 

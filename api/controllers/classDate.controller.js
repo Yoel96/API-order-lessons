@@ -1,4 +1,6 @@
 const ClassDate = require('../models/classDate.model')
+const User = require('../models/user.model')
+const Timetable = require('../models/timetable.model')
 
 async function getAllClassDates(req, res) {
     try {
@@ -28,10 +30,19 @@ async function getOneClassDate(req, res) {
 
 async function createClassDate(req, res) {
     try {
+
+        const timetable= Timetable.findByPk(parseInt(req.body.timeTable_Id))
+        if(timetable && !timetable.hasClass_date()){
         const classDate = await ClassDate.create({
-            comments: req.body.comments,
+            comments: req.body.comments
         })
+        const student = await User.findByPk(parseInt(req.body.student_id))
+        student.addClass_date(classDate)
         return res.status(200).json('ClassDate created')
+        }
+        res.status(400).send("That hour is already taken or doesnt exist in the system")
+
+
     } catch (error) {
         res.status(500).send(error.message)
     }
@@ -74,16 +85,22 @@ async function deleteClassDate(req, res) {
 
 async function getClassDateByUserEmail(req, res) {
     try {
-        const classDate = await ClassDate.findOne({
+         
+        const user = await User.findOne({
             where: {
                 email: req.params.userEmail,
             },
         })
-        if (classDate) {
-            return res.status(200).json('classDate deleted')
+        if(user){
+        const classDates= await user.getClass_dates()
+       
+        if (classDates.length>0) {
+            return res.status(200).json(classDates)
         } else {
-            return res.status(404).send('classDate not found')
+            return res.status(400).send('classDate not found')
         }
+    }
+    return res.status(400).send('User not found')
     } catch (error) {
         return res.status(500).send(error.message)
     }
