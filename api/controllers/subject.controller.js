@@ -104,11 +104,26 @@ async function getSubjectsByLessonType(req, res) {
     }
 }
 
+async function getSubjectsByTeacher(req, res) { 
+  try {
+      const lessonType = await LessonType.findByPk(req.params.id)
+  
+      if (lessonType) {
+      return res.status(200).json(lessonType)
+      } else {
+      return res.status(404).send('LessonType not found')
+      }
+  } catch (error) {
+      return res.status(500).send(error.message)
+  }
+  }
+
 module.exports = { 
     getAllSubjects,
     getOneSubject,
     createSubject,
     updateSubject,
     deleteSubject,
-    getSubjectsByLessonType
+    getSubjectsByLessonType,
+    getSubjectsByTeacher
  }

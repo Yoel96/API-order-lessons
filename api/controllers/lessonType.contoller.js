@@ -100,6 +100,8 @@ async function deleteLessonType(req, res) {
     }
 }
 
+
+
 module.exports = { 
     getAllLessonTypes,
     getOneLessonType,
