@@ -9,6 +9,7 @@ router.post('/', createSubject)
 router.put('/:id', updateSubject)
 router.delete('/:id', deleteSubject)
 router.get('/:id', getOneSubject)
+router.get('/:id', getSubjectsByLessonType)
 
 
 module.exports = router

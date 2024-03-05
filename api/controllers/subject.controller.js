@@ -86,6 +86,7 @@ async function deleteSubject(req, res) {
         return res.status(500).send(error.message)
     }
 }
+
 async function getSubjectsByLessonType(req, res) {
     try {
         const subject = await subject.destroy({
@@ -96,7 +97,7 @@ async function getSubjectsByLessonType(req, res) {
         if (subject) {
         return res.status(200).json('Subject deleted')
         } else {
-        return res.status(404).send('subject not found')
+        return res.status(404).send('Subject not found')
         }
     } catch (error) {
         return res.status(500).send(error.message)
