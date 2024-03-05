@@ -3,8 +3,10 @@ const User = require('../models/user.model')
 
 async function getAllFavouriteTeachersStudent(req, res) {
     try {
-        const student = await User.findByPk(req.params.student_id)
-        const favouriteTeachers = await student.getTeacher()
+        const student = res.locals.user
+        if (!student) return res.status(404).send('No student found')
+
+        const favouriteTeachers = await student.getTeacher_infos()
 
         if (favouriteTeachers) {
             return res.status(200).json(favouriteTeachers)
@@ -19,15 +21,11 @@ async function getAllFavouriteTeachersStudent(req, res) {
 
 async function createFavouriteTeacherStudent(req, res) {
     try {
-        const student = await User.findByPk(req.body.student_id)
-        const teacher = await Teacher.findOne({
-            where: {
-                email: req.body.email
-            }
-        })
+        const student = res.locals.user
+        const teacher = await Teacher.findByPk(parseInt(req.body.teacher_id))
 
-        const favouriteTeacher = await student.addTeacher_info(teacher) 
-        
+        const favouriteTeacher = await student.addTeacher_info(teacher)
+
         return res.status(200).json('Favourite teacher created')
     } catch (error) {
         res.status(500).send(error.message)
@@ -36,16 +34,13 @@ async function createFavouriteTeacherStudent(req, res) {
 
 async function deleteFavouriteTeacherStudent(req, res) {
     try {
-        const favourite = await TeacherStudentFavourite.destroy({
-            where: {
-                id: req.params.teacher_id,
-            },
-        })
-        if (favourite) {
-            return res.status(200).json('Favourite teacher deleted')
-        } else {
-            return res.status(404).send('Favourite teacher not found')
-        }
+        const student = res.locals.user
+        const teacher = await Teacher.findByPk(parseInt(req.params.teacher_id))
+
+        await student.removeTeacher_infos(teacher)
+
+        return res.status(200).json('Favourite teacher deleted')
+
     } catch (error) {
         return res.status(500).send(error.message)
     }

@@ -9,8 +9,7 @@ const ClassDate = require('../models/classDate.model.js')
 const TeacherStudentFavourite = require('../models/favouriteTeacherStudent.model.js')
 const SubjectLessonType = require('../models/subjectLessonType.model.js')
 const TeacherSubject = require('../models/teacherSubject.model.js')
-const DBRelationships =require('./relationships.js')
-
+ 
 const dbCheck = async () => {
     try {
         await sequelize.authenticate()
