@@ -1,4 +1,4 @@
-const LessonType =('../models/lessonType.model.js')
+const LessonType =require('../models/lessonType.model.js')
 
 async function getAllLessonTypes(req, res) {
     try {
