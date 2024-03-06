@@ -38,8 +38,8 @@ async function createClassDate(req, res) {
                 const classDate = await ClassDate.create({
                     comments: req.body.comments
                 })
-                res.locals.user.addClass_date(classDate)
-                timetable.setClass_date(classDate)
+                await res.locals.user.addClass_date(classDate)
+                await timetable.setClass_date(classDate)
                 return res.status(200).json('ClassDate created')
             }
             return res.status(400).send("That hour is already taken or doesnt exist in the system")
@@ -54,6 +54,7 @@ async function createClassDate(req, res) {
 
 async function updateClassDate(req, res) {
     try {
+        
         const [classDateExist, classDate] = await ClassDate.update(req.body, {
             returning: true,
             where: {
@@ -87,16 +88,12 @@ async function deleteClassDate(req, res) {
     }
 }
 
-async function getClassDatesByUserEmail(req, res) {
+async function getClassDatesByStudentEmail(req, res) {
     try {
 
-        const user = await User.findOne({
-            where: {
-                email: req.params.userEmail,
-            },
-        })
-        if (user) {
-            const classDates = await user.getClass_dates()
+        const student = res.locals.user
+        if (student) {
+            const classDates = await student.getClass_dates()
 
             if (classDates.length > 0) {
                 return res.status(200).json(classDates)
@@ -116,5 +113,5 @@ module.exports = {
     createClassDate,
     updateClassDate,
     deleteClassDate,
-    getClassDatesByUserEmail
+    getClassDatesByStudentEmail
 }

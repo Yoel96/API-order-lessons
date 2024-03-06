@@ -1,14 +1,15 @@
 const router = require('express').Router()
-const {checkStudent} = require('../middlewares/auth.middleware')
+const {checkRole ,checkAuth } = require('../middlewares/auth.middleware')
 
-const { getAllClassDates, getOneClassDate, createClassDate, updateClassDate, deleteClassDate, getClassDatesByUserEmail } = require('../controllers/classDate.controller')
+const { getAllClassDates, getOneClassDate, createClassDate, updateClassDate, deleteClassDate, getClassDatesByStudentEmail } = require('../controllers/classDate.controller')
 
-router.get('/getUsers/:userEmail', getClassDatesByUserEmail)
-router.get('/', getAllClassDates)
-router.get('/:id', getOneClassDate)
-router.post('/', checkStudent, createClassDate)
-router.put('/:id', updateClassDate)
-router.delete('/:id', deleteClassDate)
+router.get('/student/', checkAuth,(req,res,next)=>{  checkRole(res,res,next,["student"])  } , getClassDatesByStudentEmail)
+
+router.get('/', checkAuth,(req,res,next)=>{  checkRole(res,res,next,["admin"])  }, getAllClassDates)
+router.get('/:id', checkAuth,(req,res,next)=>{  checkRole(res,res,next,["admin"])  }, getOneClassDate)
+router.post('/',  checkAuth,(req,res,next)=>{  checkRole(res,res,next,["student","admin"])  } , createClassDate)
+router.put('/:id', checkAuth,(req,res,next)=>{  checkRole(res,res,next,["student","admin"])  } ,updateClassDate)
+router.delete('/:id', checkAuth,(req,res,next)=>{  checkRole(res,res,next, ["student","teacher", "admin"])  }, deleteClassDate)
  //sirve para mostrar todas las valoraciones de un profesor o un estudiante buscandolo por el email
 
 

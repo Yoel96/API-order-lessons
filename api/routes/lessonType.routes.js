@@ -1,14 +1,14 @@
 const router = require('express').Router()
-
+const {checkRole, checkAuth } = require('../middlewares/auth.middleware')
 const { getAllLessonTypes, getOneLessonType, getOneLessonTypeBySubject, createLessonType, updateLessonType, deleteLessonType
 
 } = require('../controllers/lessonType.contoller')
 
-router.get('/', getAllLessonTypes)
-router.get('/:id', getOneLessonType)
+router.get('/', checkAuth,(req,res,next)=>{  checkRole(res,res,next,["admin","student","teacher"])  } , getAllLessonTypes)
+router.get('/:id', checkAuth,(req,res,next)=>{  checkRole(res,res,next,["admin","student","teacher"])  } , getOneLessonType)
 //router.get('/:id', getOneLessonTypeBySubject)
-router.post('/', createLessonType)
-router.put('/:id', updateLessonType)
-router.delete('/:id', deleteLessonType)
+router.post('/', checkAuth,(req,res,next)=>{  checkRole(res,res,next,["admin"])  } , createLessonType)
+router.put('/:id',checkAuth,(req,res,next)=>{  checkRole(res,res,next,["admin"])  } , updateLessonType)
+router.delete('/:id', checkAuth,(req,res,next)=>{  checkRole(res,res,next,["admin"])  } ,deleteLessonType)
 
 module.exports = router

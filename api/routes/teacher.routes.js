@@ -1,16 +1,14 @@
 const router = require('express').Router()
+const {checkRole, checkAuth} = require('../middlewares/auth.middleware')
+const { getAllTeachers, getOneTeacher, updateTeacher, deleteTeacher, addSubject, removeSubject } = require('../controllers/teacher.controller')
 
-const { getAllTeachers, getOneTeacher, updateTeacher, deleteTeacher, addSubject, removeSubject
-
-} = require('../controllers/teacher.controller')
-
-router.get('/', getAllTeachers)
-router.get('/:id', getOneTeacher)
+router.get('/', checkAuth,(req,res,next)=>{checkRole(res,res,next,["admin","student"])}, getAllTeachers)
+router.get('/:id', (req,res,next)=> {checkRole(res,res,next,["admin","student"])},  getOneTeacher)
 //router.get('/:id', getOneLessonTypeBySubject)
-router.put('/:id', updateTeacher)
-router.delete('/:id', deleteTeacher)
-router.post('/addSubjects/', addSubject)
-router.post('/removeSubjects/', removeSubject)
+router.put('/:id', (req,res,next)=> {checkRole(res,res,next,["admin","teacher"])},  updateTeacher)
+router.delete('/:id', (req,res,next)=> {checkRole(res,res,next,["admin","teacher"])},  deleteTeacher)
+router.post('/addSubjects/', (req,res,next)=> {checkRole(res,res,next,["admin"])}, addSubject)
+router.post('/removeSubjects/', (req,res,next)=> {checkRole(res,res,next,["admin"])}, removeSubject)
 
 
 
