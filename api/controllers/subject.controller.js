@@ -87,8 +87,6 @@ async function addLessonType(req, res) {
     const lessonType = await LessonType.findByPk(parseInt(req.body.lessonType_Id))
     if (!lessonType) return res.status(500).send("Lesson type not found")
     await subject.addLesson_type(lessonType)
-
-
     return res.status(200).json("Lesson type added to subject")
   } catch (error) {
     return res.status(500).send(error.message)

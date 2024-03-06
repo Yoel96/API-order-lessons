@@ -3,7 +3,7 @@ const sequelize = require('../db')
 
 const TeacherRatings = sequelize.define('teacher_rating', {
     rating: {
-        type: DataTypes.DECIMAL,
+        type: DataTypes.DECIMAL(10,2),
         allowNull: false,
         validate: {
         min: 0,
