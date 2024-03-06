@@ -7,6 +7,9 @@ const { getAllClassDates, getOneClassDate} = require('../controllers/classDate.c
 router.get('/', checkAuth,(req,res,next)=>{  checkRole(req, res,next,["admin"])  }, getAllClassDates)
 router.get('/:id', checkAuth,(req,res,next)=>{  checkRole(req, res,next,["admin"])  }, getOneClassDate)
  
+
+
+
  //sirve para mostrar todas las valoraciones de un profesor o un estudiante buscandolo por el email
 
 

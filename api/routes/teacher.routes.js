@@ -5,8 +5,7 @@ const { getAllTeachers, getOneTeacher, updateTeacher, deleteTeacher   } = requir
 
 router.get('/', checkAuth,(req,res,next)=>{checkRole(req, res,next,["admin","student"])}, getAllTeachers)
 router.get('/:id', (req,res,next)=> {checkRole(req, res,next,["admin","student"])},  getOneTeacher)
-//router.get('/:id', getOneLessonTypeBySubject)
-router.put('/:id', (req,res,next)=> {checkRole(req, res,next,["admin","teacher"])},  updateTeacher)
+router.put('/:id', (req,res,next)=> {checkRole(req, res,next,["admin"])},  updateTeacher)
 router.delete('/:id', (req,res,next)=> {checkRole(req, res,next,["admin"])},  deleteTeacher)
 
 
