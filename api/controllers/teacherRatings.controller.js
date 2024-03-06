@@ -18,7 +18,8 @@ async function getAllRatings(req, res) {
 async function getOneRating(req, res) {
     try {
         const rating = await TeacherRatings.findByPk(req.params.id)
-        if (rating) {TeacherRatings
+        if (rating) {
+            TeacherRatings
             return res.status(200).json(rating)
         } else {
             return res.status(404).send('Rating not found')
@@ -30,11 +31,11 @@ async function getOneRating(req, res) {
 
 async function createRating(req, res) {
     try {
-        const rating = await TeacherRatings.create( {rating: parseFloat(req.body.rating), review: req.body.review})
-      
+        const rating = await TeacherRatings.create({ rating: parseFloat(req.body.rating), review: req.body.review })
+
         const student = res.locals.user
         const teacher = await Teacher.findByPk(parseInt(req.body.teacher_id))
-        if(!teacher || !student) return res.status(400).json('Student or teacher not found')
+        if (!teacher || !student) return res.status(400).json('Student or teacher not found')
         student.addTeacher_rating(rating)
         teacher.addTeacher_rating(rating)
 
@@ -47,7 +48,7 @@ async function createRating(req, res) {
 async function updateRating(req, res) {
     try {
 
-        const [ratingExist, rating] = await TeacherRatings.update({rating: parseFloat(req.body.rating), review: req.body.review}, {
+        const [ratingExist, rating] = await TeacherRatings.update({ rating: parseFloat(req.body.rating), review: req.body.review }, {
             returning: true,
             where: {
                 id: req.params.id,
@@ -80,17 +81,12 @@ async function deleteRating(req, res) {
     }
 }
 
-async function getTeacherRatingByEmail(req, res) {
+async function getTeacherRatings(req, res) {
     try {
-        const user = await User.findOne({
-            where: {
-                email: req.params.userEmail,
-            },
-        })
-        const teacher= await user.getTeacher_info()
-        console.log(teacher)
-        if(!teacher || !user ) return res.status(404).send('Teacher not found')
-        const ratings= await teacher.getTeacher_ratings()
+        const user = res.locals.user
+        const teacher = await user.getTeacher_info()
+        if (!teacher || !user) return res.status(404).send('Teacher not found')
+        const ratings = await teacher.getTeacher_ratings()
 
         if (ratings) {
             return res.status(200).json(ratings)
@@ -102,11 +98,28 @@ async function getTeacherRatingByEmail(req, res) {
     }
 }
 
+async function getUserRatings(req, res) {
+    try {
+        const user = res.locals.user
+        if (user) return res.status(404).send('Teacher not found')
+        const ratings = await user.getTeacher_ratings()
+        if (ratings) {
+            return res.status(200).json(ratings)
+        } else {
+            return res.status(404).send('rating not found')
+        }
+    } catch (error) {
+        return res.status(500).send(error.message)
+    }
+}
+
+
 module.exports = {
     getAllRatings,
     getOneRating,
     createRating,
     updateRating,
     deleteRating,
-    getTeacherRatingByEmail
+    getTeacherRatings,
+    getUserRatings
 }

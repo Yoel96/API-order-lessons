@@ -43,7 +43,7 @@ async function getOneTimetableByTeacher(req, res) {
     }
 }
 
-async function createTimetable(req, res) {
+async function TeachercreateTimetable(req, res) {
     try {
       const teacher = await res.locals.user.getTeacher_info()
       const teacherTimeTable= await teacher.getTimetables()
@@ -63,7 +63,7 @@ async function createTimetable(req, res) {
     }
 }
 
-async function updateTimetable(req, res) {
+async function TeacherupdateTimetable(req, res) {
     try {
 
       const teacher = await res.locals.user.getTeacher_info()
@@ -95,7 +95,7 @@ async function updateTimetable(req, res) {
     }
 }
 
-async function deleteTimetable(req, res) {
+async function TeacherDeleteTimetable(req, res) {
 try {
     const timetable = await Timetable.destroy({
     where: {
@@ -138,9 +138,9 @@ module.exports =  {
     
     getAllTimetables,
     getOneTimetableByTeacher,
-    createTimetable,
-    updateTimetable,
-    deleteTimetable,
+    TeachercreateTimetable,
+    TeacherupdateTimetable,
+    TeacherDeleteTimetable,
     getTimetableBysubject
 }
 

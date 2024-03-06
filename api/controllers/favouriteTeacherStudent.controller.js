@@ -1,7 +1,7 @@
 const Teacher = require('../models/teacher.model')
 const User = require('../models/user.model')
 
-async function getAllFavouriteTeachersStudent(req, res) {
+async function getStudentTeachersFavourites(req, res) {
     try {
         const student = res.locals.user
         if (!student) return res.status(404).send('No student found')
@@ -47,7 +47,7 @@ async function deleteFavouriteTeacherStudent(req, res) {
 }
 
 module.exports = {
-    getAllFavouriteTeachersStudent,
+    getStudentTeachersFavourites,
     createFavouriteTeacherStudent,
     deleteFavouriteTeacherStudent
 }

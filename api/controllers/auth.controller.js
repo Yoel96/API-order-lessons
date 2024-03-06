@@ -5,7 +5,6 @@ const bcrypt = require('bcrypt')
 const signUp = async (req, res)=>{
 
     try {
-        
         const body = req.body.userInfo
         const genSalt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT))
         body.password= await  bcrypt.hash(body.password, genSalt)
