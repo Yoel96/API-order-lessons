@@ -3,8 +3,15 @@ const {checkRole ,checkAuth } = require('../middlewares/auth.middleware')
 
 const {  createClassDate, updateClassDate, deleteClassDate, getClassDatesByStudentEmail } = require('../controllers/classDate.controller')
 const {  getStudentTeachersFavourites, createFavouriteTeacherStudent, deleteFavouriteTeacherStudent } = require('../controllers/favouriteTeacherStudent.controller')
-const {  TeachercreateTimetable, TeacherupdateTimetable, TeacherDeleteTimetable} = require('../controllers/timetable.contoller')
+const {  TeacherCreateTimetable, TeacherupdateTimetable, TeacherDeleteTimetable, TeacherTimetable} = require('../controllers/timetable.contoller')
 const { getTeacherRatings, getUserRatings } = require('../controllers/teacherRatings.controller')
+const {updateTeacherProfile, teacherAddSubject, teacherRemoveSubject} = require('../controllers/teacher.controller')
+const {updateProfile} = require('../controllers/user.controller')
+ 
+
+
+//change user info
+router.put('/', checkAuth,(req,res,next)=>{  checkRole(req, res,next,["student","teacher"])} , updateProfile)
 
 
 // Student routes
@@ -30,16 +37,24 @@ router.get('ratings/student/', checkAuth, (req,res,next)=>{checkRole(req, res, n
 
 // Teacher routes
 
+router.put('/teacher/', checkAuth,(req,res,next)=>{checkRole(req, res,next,["teacher"])}, updateTeacherProfile)
+
+
 // teacher timetable
-router.post('timeTable/', checkAuth,(req,res,next)=>{checkRole(req, res,next,["teacher"])},TeachercreateTimetable)
-router.put('timeTable/:id', checkAuth,(req,res,next)=>{checkRole(req, res,next,["teacher"])}, TeacherupdateTimetable)
-router.delete('timeTable/:id', checkAuth,(req,res,next)=>{checkRole(req, res,next,["teacher"])}, TeacherDeleteTimetable)
+router.get('/timeTable/', checkAuth,(req,res,next)=>{checkRole(req, res,next,["teacher"])},TeacherTimetable)
+router.post('/timeTable/', checkAuth,(req,res,next)=>{checkRole(req, res,next,["teacher"])},TeacherCreateTimetable)
+router.put('/timeTable/:id', checkAuth,(req,res,next)=>{checkRole(req, res,next,["teacher"])}, TeacherupdateTimetable)
+router.delete('/timeTable/:id', checkAuth,(req,res,next)=>{checkRole(req, res,next,["teacher"])}, TeacherDeleteTimetable)
+
+
+
 
 // teacher ratings
 router.get('ratings/teacher/', checkAuth,(req,res,next)=>{checkRole(req, res,next,["student", "teacher", "admin"])}, getTeacherRatings)
 
 
-
+router.post('/subject/',  checkAuth,(req,res,next)=> {checkRole(req, res,next,["teacher"])}, teacherAddSubject)
+router.delete('/subject/',  checkAuth,(req,res,next)=> {checkRole(req, res,next,["teacher"])}, teacherRemoveSubject)
 
 
 module.exports= router

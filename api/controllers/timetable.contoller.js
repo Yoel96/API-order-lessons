@@ -43,7 +43,25 @@ async function getOneTimetableByTeacher(req, res) {
     }
 }
 
-async function TeachercreateTimetable(req, res) {
+
+
+const TeacherTimetable = async (req,res)=>{
+
+  try {
+    const teacher = await res.locals.user.getTeacher_info()
+    const teacherTimeTable= await teacher.getTimetables()
+    if(!teacherTimeTable) return res.status(400).send("Teacher doesnt has hours set")
+    res.status(200).json(teacherTimeTable)
+  } catch (error) {
+    return res.status(500).send(error.message)
+
+  }
+
+
+}
+
+
+async function TeacherCreateTimetable(req, res) {
     try {
       const teacher = await res.locals.user.getTeacher_info()
       const teacherTimeTable= await teacher.getTimetables()
@@ -138,9 +156,10 @@ module.exports =  {
     
     getAllTimetables,
     getOneTimetableByTeacher,
-    TeachercreateTimetable,
+    TeacherCreateTimetable,
     TeacherupdateTimetable,
     TeacherDeleteTimetable,
-    getTimetableBysubject
+    getTimetableBysubject,
+    TeacherTimetable
 }
 

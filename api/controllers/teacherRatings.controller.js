@@ -29,7 +29,7 @@ async function getOneRating(req, res) {
     }
 }
 
-async function createRating(req, res) {
+async function UsercreateRating(req, res) {
     try {
         const rating = await TeacherRatings.create({ rating: parseFloat(req.body.rating), review: req.body.review })
 
@@ -117,7 +117,7 @@ async function getUserRatings(req, res) {
 module.exports = {
     getAllRatings,
     getOneRating,
-    createRating,
+    UsercreateRating,
     updateRating,
     deleteRating,
     getTeacherRatings,

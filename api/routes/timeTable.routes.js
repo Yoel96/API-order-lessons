@@ -6,7 +6,7 @@ const {
 } = require('../controllers/timetable.contoller')
 
 router.get('/', checkAuth,(req,res,next)=>{checkRole(req, res,next,["admin"])}, getAllTimetables)
-//router.get('/:id', getOneTimetableByTeacher)
+
 
 router.get('/subject/:subject_id', checkAuth,(req,res,next)=>{checkRole(req, res,next,[ "admin", "student"])}, getTimetableBysubject )
 

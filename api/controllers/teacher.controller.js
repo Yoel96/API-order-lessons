@@ -81,20 +81,46 @@ async function updateTeacher(req, res) {
     }
 }
 
+const updateTeacherProfile = async (req,res)=>{
 
-const addSubject = async (req, res) => {
 
     try {
-        const teacher = await Teacher.findByPk(req.body.teacher_id)
+        const teacher= await res.locals.user.getTeacher_info()
+
+        const teacherUpdated = await teacher.update(req.body, {
+            returning: true   })
+        if (teacher !== 0) {
+            return res.status(200).json({ message: 'Teacher updated', teacher: teacher })
+        } else {
+            return res.status(404).send('Teacher not found')
+        }
+    } catch (error) {
+        return res.status(500).send(error.message)
+    }
+
+
+
+}
+
+
+const teacherAddSubject = async (req, res) => {
+
+    try {
+        const teacher = await res.locals.user.getTeacher_info()
         if (!teacher) return res.status(400).send("Teacher not found")
 
         const subject = await Subject.findByPk(req.body.subject_id)
         const lessonType = await LessonType.findByPk(req.body.lessonType_id)
 
-        const hasLessonTYpe = await subject.hasLesson_type(lessonType)
-        if (hasLessonTYpe) {
+        const hasLessonType = await subject.hasLesson_type(lessonType)
+        if (hasLessonType) {
             await teacher.addSubject(subject)
             res.status(200).send("Subject added to Teacher")
+        }
+        else{
+
+            res.status(400).send("subject doesnt have a lesson type")
+
         }
 
     } catch (error) {
@@ -106,10 +132,22 @@ const addSubject = async (req, res) => {
 }
 
 
-const removeSubject = async (req, res) => {
+const teacherRemoveSubject = async (req, res) => {
+
+    try {
+        const teacher = await res.locals.user.getTeacher_info()
+        if (!teacher) return res.status(400).send("Teacher not found")
+
+        const subject = await Subject.findByPk(req.body.subject_id)
+        
+        await teacher.removeSubject(subject)
+        res.status(200).send("Subject deleted")
 
 
+    } catch (error) {
+        res.status(500).send(error.message)
+    }
 
 }
 
-module.exports = { getAllTeachers, getOneTeacher, updateTeacher, deleteTeacher, removeSubject, addSubject }
+module.exports = { getAllTeachers, getOneTeacher, updateTeacher, deleteTeacher, teacherRemoveSubject, teacherAddSubject, updateTeacherProfile }

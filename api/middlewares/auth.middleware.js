@@ -59,20 +59,19 @@ const checkStudent = (req, res, next) => {
                     email: payload.email,
                     role: payload.role
                 }})
-            if (!user) return res.status(500).send('Unauthorized')
-            res.locals.checkAuthuser = user
+            if (user==0) return res.status(500).send('Unauthorized')
+            res.locals.user = user
             next()  
         })
     } catch (error) {
-        console.log(error)
-        res.status(500).send('Unauthorized')
+         res.status(500).send('Unauthorized')
     }
 }
  
 
 const checkRole = (req, res, next, roles) => {
  
-    
+ 
     if(roles.includes(res.locals.user.dataValues.role)){
          next()
 
