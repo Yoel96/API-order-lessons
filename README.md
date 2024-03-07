@@ -1,7 +1,7 @@
 # API-order-lessons
 # School Proyect 2 OrderLessons
 
-## Proyect description
+## PROYECT DESCRIPTION
 
 Welcome to our app OrderLessons, a backend where we offer tutoring services for all types of students, where you can book with different teachers depending on the course and subjects you need. There is the possibility of receiving the classes online or in person.
 
@@ -26,26 +26,26 @@ Aquí podemos poner un enlace de la página
   
 - **Student**: The student's role, once logged in, can choose the course level, the subjects and the teacher. In addition to booking appointments that are available from all teachers, with the option to cancel and choose whether it is face-to-face or online.
 
- ## Requeriments
+ ## REQUERIMENTS
  - Node.js
  - Database(Change .env-> Dialect with the one you use)
 
 
- ## Installation
+ ## INSTALLATION
 To get started with the School Administration API, just get into the repo and run:
 ``` npm i ```
 
-# Usage
+# USAGE
 
 Create .env file to your own settings. To start the api server just run:
 
 ``` node index.js```
 
-## Data structure and models
+## DATA STRUCTURE AND MODELS
 
 ![image](https://github.com/Yoel96/API-order-lessons/assets/128009010/1065ba90-5bfd-44c9-9498-20b34017ab0f)
 
-### Relations
+### RELATIONS
 
 ### One to one
 - Ref: "teacher_info"."user_id" - "users"."id"
@@ -63,7 +63,7 @@ Create .env file to your own settings. To start the api server just run:
 - Ref: "subject_lessonType"."subject_id" > "subjects"."id"
 - Ref: "subject_lessonType"."subject_id" > "Lesson_Type"."id"
 
- # Backend Endpoints PENDIENTE DE MODIFICACION
+ # Backend Endpoints PENDIENTE DE REVISAR
  <details>
 <summary>:point_right: Auth Endpoints</summary>
 
