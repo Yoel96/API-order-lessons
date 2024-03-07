@@ -22,7 +22,7 @@ const dbCheck = async () => {
 
 const dbSync = async () => {
     try {
-        //sequelize.sync(alter:true)
+        //sequelize.sync({force:true})
         await User.sync({alter:true})
         await Teacher.sync({alter:true})
         await LessonType.sync({alter:true})

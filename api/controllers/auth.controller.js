@@ -22,19 +22,13 @@ const signUp = async (req, res)=>{
 
 
     } catch (error) {
-       
         res.status(500).send(error.message)
-        
     }
-  
-
 }
 
 
 const login = async (req, res)=>{
-
     try {
-        
         const user= await User.findOne({where : {email: req.body.email}})
         if(!user) return res.status(400).send("Invalid email")
 
@@ -50,15 +44,9 @@ const login = async (req, res)=>{
             res.status(400).send("Invalid password")
 
         });
-        
-
     } catch (error) {
         res.status(500).send(error)
-
     }
-
 }
-
-
 
 module.exports= {login,signUp}
