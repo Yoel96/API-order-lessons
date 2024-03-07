@@ -2,7 +2,7 @@
 
 ## Proyect description
 
-Welcome to our app OrderLessons, an backend where we offer tutoring services for all types of students, where you can book with different teachers depending on the course and subjects you need. There is the possibility of receiving the classes online or in person.
+Welcome to our app OrderLessons, a backend where we offer tutoring services for all types of students, where you can book with different teachers depending on the course and subjects you need. There is the possibility of receiving the classes online or in person.
 
 Aquí podemos poner un enlace de la página
 
