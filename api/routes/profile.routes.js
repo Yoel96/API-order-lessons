@@ -6,10 +6,11 @@ const { getStudentTeachersFavourites, createFavouriteTeacherStudent, deleteFavou
 const { TeacherCreateTimetable, TeacherupdateTimetable, TeacherDeleteTimetable, TeacherTimetable } = require('../controllers/timetable.contoller')
 const { getTeacherRatings, getUserRatings } = require('../controllers/teacherRatings.controller')
 const { updateTeacherProfile, teacherAddSubject, teacherRemoveSubject, getTeacherSubject } = require('../controllers/teacher.controller')
-const { updateProfile } = require('../controllers/user.controller')
+const { updateProfile , deleteProfile} = require('../controllers/user.controller')
 
 //change user info
 router.put('/', checkAuth, (req, res, next) => { checkRole(req, res, next, ["student", "teacher"]) }, updateProfile)
+router.delete('/', checkAuth, (req, res, next) => { checkRole(req, res, next, ["student", "teacher"]) }, deleteProfile)
 
 /* Student routes */
 
@@ -25,7 +26,7 @@ router.post('/favouriteTeacher/', checkAuth, (req, res, next) => { checkRole(req
 router.delete('/favouriteTeacher/:teacher_id', checkAuth, (req, res, next) => { checkRole(req, res, next, ["student"]) }, deleteFavouriteTeacherStudent)
 
 // student ratings
-router.get('ratings/student/', checkAuth, (req, res, next) => { checkRole(req, res, next, ["student", "admin"]) }, getUserRatings)
+router.get('/ratings/student/', checkAuth, (req, res, next) => { checkRole(req, res, next, ["student", "admin"]) }, getUserRatings)
 
 /* Teacher routes */
 //teacher info

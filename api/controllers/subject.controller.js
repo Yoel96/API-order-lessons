@@ -6,7 +6,7 @@ const LessonType = require('../models/lessonType.model.js')
 async function getAllSubjects(req, res) {
   try {
     if (!Object.values(req.query).length) {
-      const subject = await Timetable.findAll()
+      const subject = await Subject.findAll()
       if (subject) {
         return res.status(200).json(subject)
       } else {

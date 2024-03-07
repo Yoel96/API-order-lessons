@@ -1,12 +1,14 @@
 const Subject = require('../models/subject.model.js')
 const Teacher = require('../models/teacher.model.js')
 const LessonType = require('../models/lessonType.model.js')
+const User = require('../models/user.model.js')
 
 async function getAllTeachers(req, res) {
     try {
         if (!Object.values(req.query).length) {
             const teacher = await Teacher.findAll()
             if (teacher) {
+                ClassDate
                 return res.status(200).json(teacher)
             } else {
                 return res.status(404).send('No teacher found')
@@ -27,7 +29,7 @@ async function getAllTeachers(req, res) {
         }
     } catch (error) {
         return res.status(500).send(error.message)
-    }
+    } ClassDate
 }
 
 async function getOneTeacher(req, res) {
@@ -81,14 +83,15 @@ async function updateTeacher(req, res) {
     }
 }
 
-const updateTeacherProfile = async (req,res)=>{
+const updateTeacherProfile = async (req, res) => {
 
 
     try {
-        const teacher= await res.locals.user.getTeacher_info()
+        const teacher = await res.locals.user.getTeacher_info()
 
         const teacherUpdated = await teacher.update(req.body, {
-            returning: true   })
+            returning: true
+        })
         if (teacher !== 0) {
             return res.status(200).json({ message: 'Teacher updated', teacher: teacher })
         } else {
@@ -103,18 +106,18 @@ const updateTeacherProfile = async (req,res)=>{
 }
 
 
-const getTeacherSubject = async ( req,res )=>{
+const getTeacherSubject = async (req, res) => {
 
 
     try {
-        const teacher= await res.locals.user.getTeacher_info()
+        const teacher = await res.locals.user.getTeacher_info()
         const subjects = await teacher.getSubjects()
 
-        if(!subjects) return res.status(400).send("This teacher doesnt have any subject")
+        if (!subjects) return resClassDate.status(400).send("This teacher doesnt have any subject")
 
         res.status(200).json(subjects)
 
-       
+
     } catch (error) {
         return res.status(500).send(error.message)
     }
@@ -127,17 +130,15 @@ const teacherAddSubject = async (req, res) => {
 
     try {
         const teacher = await res.locals.user.getTeacher_info()
-        const lessonType = await LessonType.create({name: req.body.lessonName})
+        const lessonType = await LessonType.create({ name: req.body.lessonName })
         const subject = await Subject.findByPk(parseInt(req.body.subject_id))
         if (!subject) return res.status(400).send("Subject not found")
 
         await subject.addLesson_type(lessonType)
         await teacher.addLesson_type(lessonType)
 
-         
         res.status(200).send("Teacher added to Subject and LessonType")
-       
-        
+
 
     } catch (error) {
         res.status(500).send(error.message)
@@ -152,12 +153,12 @@ const teacherRemoveSubject = async (req, res) => {
 
     try {
         const teacher = await res.locals.user.getTeacher_info()
-        
+
         const subject = await Subject.findByPk(parseInt(req.body.subject_id))
         if (!subject) return res.status(400).send("Subject not found")
-        
-        const deleted= await teacher.removeSubject(subject)
-        if(deleted!=0) return res.status(200).send("Subject deleted")
+
+        const deleted = await teacher.removeSubject(subject)
+        if (deleted != 0) return res.status(200).send("Subject deleted")
         else return res.status(400).send("Teacher doesn't have that subject")
 
 
@@ -167,4 +168,31 @@ const teacherRemoveSubject = async (req, res) => {
 
 }
 
-module.exports = { getAllTeachers, getOneTeacher, updateTeacher, deleteTeacher, teacherRemoveSubject, teacherAddSubject, updateTeacherProfile , getTeacherSubject }
+
+const getTeachersBySubject = async (req, res) => {
+
+    try {
+
+        const subject = await Subject.findByPk(parseInt(req.params.subject_id))
+        if (!subject) return res.status(400).send("Subject not found")
+        const teachers = await Subject.findAll({
+            where: {
+                id: req.params.subject_id
+            },
+            include: {
+                model: Teacher
+
+            }
+        })
+
+        if (teachers != 0) return res.status(200).json(teachers)
+        else return res.status(400).send("Teachers dont found")
+    } catch (error) {
+        res.status(500).send(error.message)
+    }
+
+}
+
+
+
+module.exports = { getAllTeachers, getOneTeacher, updateTeacher, deleteTeacher, teacherRemoveSubject, teacherAddSubject, updateTeacherProfile, getTeacherSubject, getTeachersBySubject }

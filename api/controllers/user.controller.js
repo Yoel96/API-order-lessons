@@ -114,6 +114,17 @@ const updateProfile = async (req,res)=>{
 }
 
 
+const deleteProfile = async (req , res )=>{
 
 
-module.exports= {getAllUsers, getUser, deleteUser, updateUser, updateProfile}
+try {
+  const user= res.locals.user
+  const userDeleted = await user.destroy()
+  res.status(200).send("Profile deleted")
+} catch (error) {
+    res.status(500).send(error.message)
+}
+
+}
+
+module.exports= {getAllUsers, getUser, deleteUser, updateUser, updateProfile, deleteProfile}
