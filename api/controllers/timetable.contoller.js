@@ -137,7 +137,7 @@ async function getTimetableBysubject(req, res) {
 
 async function getTimeTableByTeacher(req, res) {
   try {
-    const teacher = await Teacher.findByPk(parseInt(req.params.id))
+    const teacher = await Teacher.findByPk(parseInt(req.params.teacher_id))
     const teacherTimeTable= await teacher.getTimetables()
     if(!teacherTimeTable) return res.status(400).send("Teacher doesnt has hours set")
     res.status(200).json(teacherTimeTable)
