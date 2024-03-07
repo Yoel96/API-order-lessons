@@ -30,11 +30,10 @@ async function getOneClassDate(req, res) {
 
 async function createClassDate(req, res) {
     try {
-
         const timetable = await Timetable.findByPk(parseInt(req.body.timeTable_Id))
         if (timetable) {
             const studentClass = await timetable.getClass_date()
-             if (!studentClass) {
+             if (!studentClass) { //si el horario disponible no tiene una reserva asociada
                 const classDate = await ClassDate.create({
                     comments: req.body.comments
                 })
@@ -107,11 +106,32 @@ async function getClassDatesByStudentEmail(req, res) {
     }
 }
 
+async function getClassDatesByTeacher(req, res) {
+    try {
+
+        const user = res.locals.user
+        const teacher = await user.getTeacher_info()
+        const result = await Timetable.findAll({
+            where: {
+                teacher_id : teacher.dataValues.id
+            },
+            include:{
+                model: ClassDate
+            }
+        })
+        return res.status(200).json(result)
+
+    } catch (error) {
+        return res.status(500).send(error.message)
+    }
+}
+
 module.exports = {
     getAllClassDates,
     getOneClassDate,
     createClassDate,
     updateClassDate,
     deleteClassDate,
-    getClassDatesByStudentEmail
+    getClassDatesByStudentEmail,
+    getClassDatesByTeacher
 }

@@ -44,10 +44,7 @@ async function getOneTimetableByTeacher(req, res) {
     }
 }
 
-
-
-const TeacherTimetable = async (req,res)=>{
-
+ async function TeacherTimetable (req,res) {
   try {
     const teacher = await res.locals.user.getTeacher_info()
     const teacherTimeTable= await teacher.getTimetables()
@@ -55,12 +52,8 @@ const TeacherTimetable = async (req,res)=>{
     res.status(200).json(teacherTimeTable)
   } catch (error) {
     return res.status(500).send(error.message)
-
   }
-
-
 }
-
 
 async function TeacherCreateTimetable(req, res) {
     try {
@@ -70,10 +63,8 @@ async function TeacherCreateTimetable(req, res) {
       for (const timeTable of teacherTimeTable){
         if(timeTable.dataValues.date==req.body.date && timeTable.dataValues.time==req.body.time  ){
           return res.status(500).send("That date and time is already created")
-
         }
       }
-
       const timetable = await Timetable.create(req.body)
       await teacher.addTimetable(timetable)
       return res.status(200).json({ message: 'Timetable created', timetable: timetable })
@@ -84,26 +75,19 @@ async function TeacherCreateTimetable(req, res) {
 
 async function TeacherupdateTimetable(req, res) {
     try {
-
       const teacher = await res.locals.user.getTeacher_info()
       const teacherTimeTable= await teacher.getTimetables()
-
       for (const timeTable of teacherTimeTable){
          if(timeTable.dataValues.date==req.body.date && timeTable.dataValues.time==req.body.time  ){
           return res.status(500).send("That date and time is already created")
-
         }
       }
-
       const [timetableExist, timetable] = await Timetable.update(req.body, {
         returning: true,
         where: {
           id: req.params.id
         }
       })
-
-      
-
       if (timetableExist !== 0) {
         return res.status(200).json({ message: 'Timetable updated', timetable: timetable })
       } else {
@@ -166,7 +150,6 @@ async function getTimeTableByTeacher(req, res) {
 
 
 module.exports =  { 
-    
     getAllTimetables,
     getOneTimetableByTeacher,
     TeacherCreateTimetable,
