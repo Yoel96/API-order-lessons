@@ -62,7 +62,7 @@ Create .env file to your own settings. To start the api server just run:
 - Ref: "subject_lessonType"."subject_id" > "subjects"."id"
 - Ref: "subject_lessonType"."subject_id" > "Lesson_Type"."id"
 
- # Backend Endpoints
+ # Backend Endpoints PENDIENTE DE MODIFICACION
  <details>
 <summary>:point_right: Auth Endpoints</summary>
 
@@ -74,7 +74,7 @@ Create .env file to your own settings. To start the api server just run:
 </details>
 
 <details>
-<summary>:point_right: Booking Endpoints</summary>
+<summary>:point_right: Booking Endpoints </summary>
 
 | METHOD | ENDPOINT                  | TOKEN  | ROLE         | DESCRIPTION                               | POST PARAMS                | RETURNS                        |
 | ------ | ------------------------- | ------ | ------------ | ----------------------------------------- | -------------------------- | -------------------------------|
