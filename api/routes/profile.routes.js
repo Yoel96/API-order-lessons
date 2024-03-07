@@ -5,7 +5,7 @@ const { createClassDate, updateClassDate, deleteClassDate, getClassDatesByStuden
 const { getStudentTeachersFavourites, createFavouriteTeacherStudent, deleteFavouriteTeacherStudent } = require('../controllers/favouriteTeacherStudent.controller')
 const { TeacherCreateTimetable, TeacherupdateTimetable, TeacherDeleteTimetable, TeacherTimetable } = require('../controllers/timetable.contoller')
 const { getTeacherRatings, getUserRatings } = require('../controllers/teacherRatings.controller')
-const { updateTeacherProfile, teacherAddSubject, teacherRemoveSubject } = require('../controllers/teacher.controller')
+const { updateTeacherProfile, teacherAddSubject, teacherRemoveSubject, getTeacherSubject } = require('../controllers/teacher.controller')
 const { updateProfile } = require('../controllers/user.controller')
 
 
@@ -32,8 +32,7 @@ router.delete('/favouriteTeacher/:teacher_id', checkAuth, (req, res, next) => { 
 // student ratings
 router.get('ratings/student/', checkAuth, (req, res, next) => { checkRole(req, res, next, ["student", "admin"]) }, getUserRatings)
 
-
-
+ 
 
 // Teacher routes
 
@@ -50,11 +49,15 @@ router.delete('/timeTable/:id', checkAuth, (req, res, next) => { checkRole(req, 
 
 
 // teacher ratings
-router.get('ratings/teacher/', checkAuth, (req, res, next) => { checkRole(req, res, next, ["student", "teacher", "admin"]) }, getTeacherRatings)
+router.get('/ratings/teacher/', checkAuth, (req, res, next) => { checkRole(req, res, next, ["student", "teacher", "admin"]) }, getTeacherRatings)
 
 // teacher subjects
+router.get('/subject/', checkAuth, (req, res, next) => { checkRole(req, res, next, ["teacher"]) }, getTeacherSubject)
 router.post('/subject/', checkAuth, (req, res, next) => { checkRole(req, res, next, ["teacher"]) }, teacherAddSubject)
 router.delete('/subject/', checkAuth, (req, res, next) => { checkRole(req, res, next, ["teacher"]) }, teacherRemoveSubject)
+
+
+
 
 
 module.exports = router

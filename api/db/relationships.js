@@ -8,11 +8,11 @@ const TeacherRatings = require('../models/teacherRatings.model.js')
 const Timetable = require('../models/timetable.model.js')
 const TeacherStudentFavourite = require('../models/favouriteTeacherStudent.model.js')
 const ClassDate = require('../models/classDate.model.js')
-const SubjectLessonType = require('../models/subjectLessonType.model.js')
-const TeacherSubject = require('../models/teacherSubject.model.js')
-
+ 
 const DBRelationships = async() =>{
     try {
+
+
         User.hasOne(Teacher ,{ foreignKey:"user_Id"})
         Teacher.belongsTo(User ,{as:"userId" ,foreignKey:"user_Id"} )
 
@@ -34,13 +34,18 @@ const DBRelationships = async() =>{
         User.hasMany(ClassDate, { foreignKey:"student_id"})
         ClassDate.belongsTo(User , {as:"userId",foreignKey:"student_id"})
 
-        LessonType.belongsToMany( Subject,  { through: SubjectLessonType , foreignKey:"lesson_type_id"})
-        Subject.belongsToMany( LessonType, { through: SubjectLessonType , foreignKey:"subject_id"})
-       
-        Teacher.belongsToMany( Subject,  { through: TeacherSubject , foreignKey:"teacher_id"})
-        Subject.belongsToMany( Teacher, { through: TeacherSubject , foreignKey:"subject_id"})
+         
+         
+        Teacher.belongsToMany(Subject, { through: LessonType });
+        Subject.belongsToMany(Teacher, { through: LessonType });
+        Teacher.hasMany(LessonType);
+        LessonType.belongsTo(Teacher);
+        Subject.hasMany(LessonType);
+        LessonType.belongsTo(Subject);
+   
+
     } catch (err) {
-        throw new Error(err)
+        throw new Error(err.message)
     }
 }
 

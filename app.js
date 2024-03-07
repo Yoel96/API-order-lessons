@@ -14,6 +14,7 @@ const startServer = async()=>{
         await dbCheck()
         await DBRelationships()
         //await dbSync()
+      
         console.log('*'.repeat(100))
         console.log(`Server listening on port ${process.env.PORT}`)
         console.log('*'.repeat(100))

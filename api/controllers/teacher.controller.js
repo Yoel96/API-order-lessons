@@ -103,25 +103,41 @@ const updateTeacherProfile = async (req,res)=>{
 }
 
 
+const getTeacherSubject = async ( req,res )=>{
+
+
+    try {
+        const teacher= await res.locals.user.getTeacher_info()
+        const subjects = await teacher.getSubjects()
+
+        if(!subjects) return res.status(400).send("This teacher doesnt have any subject")
+
+        res.status(200).json(subjects)
+
+       
+    } catch (error) {
+        return res.status(500).send(error.message)
+    }
+
+
+}
+
+
 const teacherAddSubject = async (req, res) => {
 
     try {
         const teacher = await res.locals.user.getTeacher_info()
-        if (!teacher) return res.status(400).send("Teacher not found")
+        const lessonType = await LessonType.create({name: req.body.lessonName})
+        const subject = await Subject.findByPk(parseInt(req.body.subject_id))
+        if (!subject) return res.status(400).send("Subject not found")
 
-        const subject = await Subject.findByPk(req.body.subject_id)
-        const lessonType = await LessonType.findByPk(req.body.lessonType_id)
+        await subject.addLesson_type(lessonType)
+        await teacher.addLesson_type(lessonType)
 
-        const hasLessonType = await subject.hasLesson_type(lessonType)
-        if (hasLessonType) {
-            await teacher.addSubject(subject)
-            res.status(200).send("Subject added to Teacher")
-        }
-        else{
-
-            res.status(400).send("subject doesnt have a lesson type")
-
-        }
+         
+        res.status(200).send("Teacher added to Subject and LessonType")
+       
+        
 
     } catch (error) {
         res.status(500).send(error.message)
@@ -136,12 +152,13 @@ const teacherRemoveSubject = async (req, res) => {
 
     try {
         const teacher = await res.locals.user.getTeacher_info()
-        if (!teacher) return res.status(400).send("Teacher not found")
-
-        const subject = await Subject.findByPk(req.body.subject_id)
         
-        await teacher.removeSubject(subject)
-        res.status(200).send("Subject deleted")
+        const subject = await Subject.findByPk(parseInt(req.body.subject_id))
+        if (!subject) return res.status(400).send("Subject not found")
+        
+        const deleted= await teacher.removeSubject(subject)
+        if(deleted!=0) return res.status(200).send("Subject deleted")
+        else return res.status(400).send("Teacher doesn't have that subject")
 
 
     } catch (error) {
@@ -150,4 +167,4 @@ const teacherRemoveSubject = async (req, res) => {
 
 }
 
-module.exports = { getAllTeachers, getOneTeacher, updateTeacher, deleteTeacher, teacherRemoveSubject, teacherAddSubject, updateTeacherProfile }
+module.exports = { getAllTeachers, getOneTeacher, updateTeacher, deleteTeacher, teacherRemoveSubject, teacherAddSubject, updateTeacherProfile , getTeacherSubject }

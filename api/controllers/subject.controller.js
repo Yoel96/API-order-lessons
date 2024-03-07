@@ -33,12 +33,12 @@ async function getAllSubjects(req, res) {
 
 async function getOneSubject(req, res) {
   try {
-    const subject = await Subject.findByPk(req.params.id)
+    const subject = await Subject.findByPk(parseInt(req.params.id))
 
     if (actor) {
       return res.status(200).json(subject)
     } else {
-      return res.status(404).send(' not found')
+      return res.status(404).send('Subject not found')
     }
   } catch (error) {
     return res.status(500).send(error.message)
@@ -48,7 +48,7 @@ async function getOneSubject(req, res) {
 async function createSubject(req, res) {
   try {
     const subject = await Subject.create(req.body)
-    if (req.body.lessonType_Id != "") {
+    if (req.body.lessonType_Id) {
 
       const lessonType = await LessonType.findByPk(parseInt(req.body.lessonType_Id))
       if (!lessonType) return res.status(500).send("Lesson type not found")
@@ -80,18 +80,6 @@ async function updateSubject(req, res) {
 }
 
 
-async function addLessonType(req, res) {
-  try {
-    const subject = await Subject.findByPk(parseInt(req.body.subject_Id))
-    if (!subject) return res.status(500).send("Subject not found")
-    const lessonType = await LessonType.findByPk(parseInt(req.body.lessonType_Id))
-    if (!lessonType) return res.status(500).send("Lesson type not found")
-    await subject.addLesson_type(lessonType)
-    return res.status(200).json("Lesson type added to subject")
-  } catch (error) {
-    return res.status(500).send(error.message)
-  }
-}
 
 async function deleteSubject(req, res) {
   try {
@@ -110,18 +98,23 @@ async function deleteSubject(req, res) {
   }
 }
 
-async function getSubjectsByLessonType(req, res) {
+async function getSubjectsByLessonTypeName(req, res) {
   try {
-    const subject = await subject.destroy({
-      where: {
-        id: req.params.id
-      }
-    })
-    if (subject) {
-      return res.status(200).json('Subject deleted')
-    } else {
-      return res.status(404).send('Subject not found')
-    }
+
+    const lessonTypes = await LessonType.findAll(
+      {
+        where:
+          { name: req.params.name },
+        include:  { model: Subject}
+      })
+     if (lessonTypes) {
+       
+      
+        return res.status(200).json(lessonTypes)
+     
+    }   else {
+    return res.status(404).send('Subjects not found')
+  } 
   } catch (error) {
     return res.status(500).send(error.message)
   }
@@ -130,7 +123,7 @@ async function getSubjectsByLessonType(req, res) {
 async function getSubjectsByTeacher(req, res) {
   try {
 
-    const teacher = await Teacher.findByPk(req.params.id)
+    const teacher = await Teacher.findByPk(parseInt(req.params.id))
 
     if (teacher) {
       const subjects = await teacher.getSubjects()
@@ -153,7 +146,7 @@ module.exports = {
   createSubject,
   updateSubject,
   deleteSubject,
-  getSubjectsByLessonType,
+  getSubjectsByLessonTypeName,
   getSubjectsByTeacher,
-  addLessonType
+
 }
