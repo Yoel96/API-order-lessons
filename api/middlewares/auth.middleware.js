@@ -3,23 +3,24 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/user.model')
 
 
-const checkAuth = (req,res,next)=>{
+const checkAuth = (req, res, next) => {
     try {
-        if( !req.headers.authorization) return res.status(500).send('Unauthorized') //headers de postman
-         
+        if (!req.headers.authorization) return res.status(500).send('Unauthorized') //headers de postman
+
         jwt.verify(req.headers.authorization, process.env.JWT_SECRET, async (err, payload) => {
             if (err) return res.status(500).send('Unauthorized')
             const user = await User.findOne({
                 where: {
                     email: payload.email,
                     role: payload.role
-                }})
-             if (!user) return res.status(500).send('Unauthorized')
+                }
+            })
+            if (!user) return res.status(500).send('Unauthorized')
             res.locals.user = user
-            next()  
+            next()
         })
     } catch (error) {
-        console.log(errcheckAuthor)
+
         res.status(500).send('Unauthorized')
     }
 
@@ -29,18 +30,19 @@ const checkAuth = (req,res,next)=>{
 
 const checkTeacher = (req, res, next) => {
     try {
-        if( !req.headers.authorization) return res.status(500).send('Unauthorized') //headers de postman
-         
+        if (!req.headers.authorization) return res.status(500).send('Unauthorized') //headers de postman
+
         jwt.verify(req.headers.authorization, process.env.JWT_SECRET, async (err, payload) => {
             if (err) return res.status(500).send('Unauthorized')
             const user = await User.findOne({
                 where: {
                     email: payload.email,
                     role: payload.role
-                }})
-             if (!user) return res.status(500).send('Unauthorized')
+                }
+            })
+            if (!user) return res.status(500).send('Unauthorized')
             res.locals.user = user
-            next()  
+            next()
         })
     } catch (error) {
         console.log(error)
@@ -50,7 +52,7 @@ const checkTeacher = (req, res, next) => {
 
 const checkStudent = (req, res, next) => {
     try {
-        if( !req.headers.authorization) return res.status(500).send('Unauthorized') //headers de postman
+        if (!req.headers.authorization) return res.status(500).send('Unauthorized') //headers de postman
 
         jwt.verify(req.headers.authorization, process.env.JWT_SECRET, async (err, payload) => {
             if (err) return res.status(500).send('Unauthorized')
@@ -58,28 +60,29 @@ const checkStudent = (req, res, next) => {
                 where: {
                     email: payload.email,
                     role: payload.role
-                }})
-            if (user==0) return res.status(500).send('Unauthorized')
+                }
+            })
+            if (user == 0) return res.status(500).send('Unauthorized')
             res.locals.user = user
-            next()  
+            next()
         })
     } catch (error) {
-         res.status(500).send('Unauthorized')
+        res.status(500).send('Unauthorized')
     }
 }
- 
+
 
 const checkRole = (req, res, next, roles) => {
- 
-    
-    if(roles.includes(res.locals.user.dataValues.role)){
-         next()
 
-    }else{
-    return res.status(500).send("That user is not authorized")
+
+    if (roles.includes(res.locals.user.dataValues.role)) {
+        next()
+
+    } else {
+        return res.status(500).send("That user is not authorized")
     }
 }
 
 
 
-module.exports = { checkTeacher,checkStudent, checkAuth ,checkRole}
+module.exports = { checkTeacher, checkStudent, checkAuth, checkRole }

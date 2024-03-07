@@ -1,7 +1,6 @@
 const router = require('express').Router()
 const {checkRole, checkAuth} = require('../middlewares/auth.middleware')
-const { getAllTimetables, getTimetableBysubject } = require('../controllers/timetable.contoller')
-
+ 
 const {
     getAllTimetables, getTimetableBysubject, getTimeTableByTeacher
 } = require('../controllers/timetable.contoller')
