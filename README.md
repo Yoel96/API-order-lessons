@@ -43,25 +43,28 @@ Create .env file to your own settings. To start the api server just run:
 
 ## DATA STRUCTURE AND MODELS
 
-![image](https://github.com/Yoel96/API-order-lessons/assets/128009010/1065ba90-5bfd-44c9-9498-20b34017ab0f)
+![image](https://media.discordapp.net/attachments/1211650846304239658/1215599284741738516/image.png?ex=65fd560e&is=65eae10e&hm=583a27755d250b72d013be1a8a3a5b9dfcb48e4ec0116236e140ea1b79e78dcc&=&format=webp&quality=lossless&width=1357&height=607)
+
 
 ### RELATIONS
 
 ### One to one
 - Ref: "teacher_info"."user_id" - "users"."id"
-- Ref: "classesDate"."timeTable_id" - "timetable"."id"
+- Ref: "teacherStudentFavourite"."teacher_id" - "teacher_info"."id"
+  
 ### One to many
 - Ref: "teacher_info"."id" < "timetable"."teacher_id"
-- Ref: "classesDate"."student_id" < "users"."id"
+- Ref: "classesDate"."timeTable_id" < "timetable"."id"
+
+### Many to one
+- Ref: "teacherStudentFavourite"."student_id" > "users"."id"
+- Ref: "classesDate"."student_id" > "users"."id"
+  
 ### Many to many
-- Ref: "teacher_Student_Favourite"."teacher_id" > "teacher_info"."id"
-- Ref: "teacher_Student_Favourite"."student_id" > "users"."id"
-- Ref: "teacher_subject"."subject_id" > "subjects"."id"
-- Ref: "teacher_subject"."teacher_id" > "teacher_info"."id"
-- Ref: "Teacher_ratings"."user_id" > "users"."id"
-- Ref: "Teacher_ratings"."teacher_id" > "teacher_info"."id"
-- Ref: "subject_lessonType"."subject_id" > "subjects"."id"
-- Ref: "subject_lessonType"."subject_id" > "Lesson_Type"."id"
+- Ref: "lessonType"."subject_id" > "subjects"."id"
+- Ref: "lessonType"."teacher_id" > "teacher_info"."id"
+- Ref: "teacher_ratings"."user_id" > "users"."id"
+- Ref: "teacher_ratings"."teacher_id" > "teacher_info"."id"
 
  # Backend Endpoints PENDIENTE DE REVISAR
  <details>
