@@ -13,7 +13,7 @@ const startServer = async()=>{
         if(err) throw new Error(err)
         await dbCheck()
         await DBRelationships()
-        //await dbSync()
+        await dbSync()
       
         console.log('*'.repeat(100))
         console.log(`Server listening on port ${process.env.PORT}`)
