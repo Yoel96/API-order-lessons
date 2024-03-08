@@ -24,6 +24,7 @@ async function createFavouriteTeacherStudent(req, res) {
     try {
         const student = res.locals.user
         const teacher = await Teacher.findByPk(parseInt(req.body.teacher_id))
+        if(!teacher) return res.status(400).json('Teacher not found')
 
         const favouriteTeacher = await student.addTeacher_info(teacher)
 

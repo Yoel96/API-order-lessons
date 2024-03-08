@@ -5,9 +5,9 @@ const { getAllTeachers, getOneTeacher, updateTeacher, deleteTeacher, getTeachers
 
 router.get('/', checkAuth,(req,res,next)=>{checkRole(req, res,next,["admin","student"])}, getAllTeachers)
 router.get('/subject/:subject_id', checkAuth,(req,res,next)=>{checkRole(req, res,next,["admin","student"])}, getTeachersBySubject)
-router.get('/:id', (req,res,next)=> {checkRole(req, res,next,["admin","student"])},  getOneTeacher)
-router.put('/:id', (req,res,next)=> {checkRole(req, res,next,["admin"])},  updateTeacher)
-router.delete('/:id', (req,res,next)=> {checkRole(req, res,next,["admin"])},  deleteTeacher)
+router.get('/:id', checkAuth,(req,res,next)=> {checkRole(req, res,next,["admin","student"])},  getOneTeacher)
+router.put('/:id', checkAuth,(req,res,next)=> {checkRole(req, res,next,["admin"])},  updateTeacher)
+router.delete('/:id', checkAuth, (req,res,next)=> {checkRole(req, res,next,["admin"])},  deleteTeacher)
 
 
 module.exports = router

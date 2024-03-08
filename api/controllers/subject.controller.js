@@ -35,7 +35,7 @@ async function getOneSubject(req, res) {
   try {
     const subject = await Subject.findByPk(parseInt(req.params.id))
 
-    if (actor) {
+    if (subject) {
       return res.status(200).json(subject)
     } else {
       return res.status(404).send('Subject not found')
@@ -70,7 +70,7 @@ async function updateSubject(req, res) {
       }
     })
     if (subjectExist !== 0) {
-      return res.status(200).json({ message: 'Subject updated', timetable: timetable })
+      return res.status(200).json({ message: 'Subject updated', subject: subject })
     } else {
       return res.status(404).send('Subject not found')
     }
@@ -83,15 +83,17 @@ async function updateSubject(req, res) {
 
 async function deleteSubject(req, res) {
   try {
-    const subject = await subject.destroy({
-      where: {
-        id: req.params.id
-      }
-    })
-    if (subject) {
+
+
+
+    const subject = await Subject.findByPk(parseInt(req.params.id))
+    if(!subject) return res.status(404).send('subject not found')
+    const deletedSubject = await subject.destroy()
+
+    if (deletedSubject) {
       return res.status(200).json('Subject deleted')
     } else {
-      return res.status(404).send('subject not found')
+      return res.status(404).send('subject not deleted')
     }
   } catch (error) {
     return res.status(500).send(error.message)

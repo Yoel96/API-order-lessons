@@ -47,7 +47,7 @@ router.get('/ratings/teacher/', checkAuth, (req, res, next) => { checkRole(req, 
 // teacher subjects
 router.get('/subject/', checkAuth, (req, res, next) => { checkRole(req, res, next, ["teacher"]) }, getTeacherSubject)
 router.post('/subject/', checkAuth, (req, res, next) => { checkRole(req, res, next, ["teacher"]) }, teacherAddSubject)
-router.delete('/subject/', checkAuth, (req, res, next) => { checkRole(req, res, next, ["teacher"]) }, teacherRemoveSubject)
+router.delete('/subject/:id', checkAuth, (req, res, next) => { checkRole(req, res, next, ["teacher"]) }, teacherRemoveSubject)
 
 
 

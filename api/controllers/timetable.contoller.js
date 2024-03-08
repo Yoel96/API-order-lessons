@@ -30,9 +30,9 @@ async function getAllTimetables(req, res) {
     }
 }
 
-async function getOneTimetableByTeacher(req, res) { 
+async function getOneTimetableById(req, res) { 
     try {
-      const timetable = await Timetable.findByPK(req.params.id)
+      const timetable = await Timetable.findByPk(req.params.id)
   
       if (timetable) {
         return res.status(200).json(timetable)
@@ -78,14 +78,15 @@ async function TeacherupdateTimetable(req, res) {
       const teacher = await res.locals.user.getTeacher_info()
       const teacherTimeTable= await teacher.getTimetables()
       for (const timeTable of teacherTimeTable){
-         if(timeTable.dataValues.date==req.body.date && timeTable.dataValues.time==req.body.time  ){
+        if(timeTable.dataValues.date==req.body.date && timeTable.dataValues.time==req.body.time  ){
           return res.status(500).send("That date and time is already created")
         }
       }
       const [timetableExist, timetable] = await Timetable.update(req.body, {
         returning: true,
         where: {
-          id: req.params.id
+          id: req.params.id,
+          teacher_id:teacher.dataValues.id
         }
       })
       if (timetableExist !== 0) {
@@ -100,9 +101,11 @@ async function TeacherupdateTimetable(req, res) {
 
 async function TeacherDeleteTimetable(req, res) {
 try {
+  const teacher = await res.locals.user.getTeacher_info()
     const timetable = await Timetable.destroy({
     where: {
-        id: req.params.id
+        id: req.params.id,
+        teacher_id:teacher.dataValues.id
     }
     }) 
     if (timetable) {
@@ -151,7 +154,7 @@ async function getTimeTableByTeacher(req, res) {
 
 module.exports =  { 
     getAllTimetables,
-    getOneTimetableByTeacher,
+    getOneTimetableById,
     TeacherCreateTimetable,
     TeacherupdateTimetable,
     TeacherDeleteTimetable,

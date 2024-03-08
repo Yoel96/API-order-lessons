@@ -74,7 +74,7 @@ const checkStudent = (req, res, next) => {
 
 const checkRole = (req, res, next, roles) => {
 
-
+  
     if (roles.includes(res.locals.user.dataValues.role)) {
         next()
 

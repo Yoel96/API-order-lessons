@@ -101,7 +101,6 @@ async function getTeacherRatings(req, res) {
 async function getUserRatings(req, res) {
     try {
         const user = res.locals.user
-        if (user) return res.status(404).send('Teacher not found')
         const ratings = await user.getTeacher_ratings()
         if (ratings) {
             return res.status(200).json(ratings)

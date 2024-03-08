@@ -6,9 +6,9 @@ const User = require('../models/user.model.js')
 async function getAllTeachers(req, res) {
     try {
         if (!Object.values(req.query).length) {
-            const teacher = await Teacher.findAll()
+            const teacher = await Teacher.findAll({ include: { model: User} })
             if (teacher) {
-                ClassDate
+                 
                 return res.status(200).json(teacher)
             } else {
                 return res.status(404).send('No teacher found')
@@ -20,7 +20,7 @@ async function getAllTeachers(req, res) {
                         req.query
                     ]
                 }
-            })
+            },{ include: { model: User} })
             if (teacher.length !== 0) {
                 return res.status(200).json(teacher)
             } else {
@@ -34,8 +34,8 @@ async function getAllTeachers(req, res) {
 
 async function getOneTeacher(req, res) {
     try {
-        const teacher = await Teacher.findByPk(req.params.id)
-
+        const teacher = await Teacher.findByPk(parseInt(req.params.id))
+        console.log(req.params.id)
         if (teacher) {
             return res.status(200).json(teacher)
         } else {
@@ -49,12 +49,10 @@ async function getOneTeacher(req, res) {
 
 async function deleteTeacher(req, res) {
     try {
-        const teacher = await teacher.destroy({
-            where: {
-                id: req.params.id
-            }
-        })
-        if (teacher) {
+
+        const teacher = await Teacher.findByPk(parseInt(req.params.id))
+        const deletedTeacher= await teacher.destroy()
+        if (deletedTeacher) {
             return res.status(200).json('Teacher deleted')
         } else {
             return res.status(404).send('Teacher not found')
@@ -92,8 +90,8 @@ const updateTeacherProfile = async (req, res) => {
         const teacherUpdated = await teacher.update(req.body, {
             returning: true
         })
-        if (teacher !== 0) {
-            return res.status(200).json({ message: 'Teacher updated', teacher: teacher })
+        if (teacherUpdated !== 0) {
+            return res.status(200).json({ message: 'Teacher updated', teacher: teacherUpdated })
         } else {
             return res.status(404).send('Teacher not found')
         }
@@ -154,7 +152,7 @@ const teacherRemoveSubject = async (req, res) => {
     try {
         const teacher = await res.locals.user.getTeacher_info()
 
-        const subject = await Subject.findByPk(parseInt(req.body.subject_id))
+        const subject = await Subject.findByPk(parseInt(req.params.id))
         if (!subject) return res.status(400).send("Subject not found")
 
         const deleted = await teacher.removeSubject(subject)
@@ -177,7 +175,7 @@ const getTeachersBySubject = async (req, res) => {
         if (!subject) return res.status(400).send("Subject not found")
         const teachers = await Subject.findAll({
             where: {
-                id: req.params.subject_id
+                id: req.params.subject_id 
             },
             include: {
                 model: Teacher

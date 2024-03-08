@@ -17,7 +17,7 @@ const signUp = async (req, res)=>{
         }
 
         res.locals.user=user
-
+        
         res.status(200).json(token)
 
 

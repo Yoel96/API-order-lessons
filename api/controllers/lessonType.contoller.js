@@ -32,7 +32,7 @@ async function getAllLessonTypes(req, res) {
 
 async function getOneLessonType(req, res) { 
 try {
-    const lessonType = await LessonType.findByPk(req.params.id)
+    const lessonType = await LessonType.findByPk(parseInt(req.params.id))
 
     if (lessonType) {
     return res.status(200).json(lessonType)

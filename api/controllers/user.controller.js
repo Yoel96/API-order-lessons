@@ -8,7 +8,7 @@ async function getAllUsers(req, res) {
         const user = await User.findAll()
         
         if (user) {
-          return res.status(200).json(timetables)
+          return res.status(200).json(user)
         } else {
           return res.status(404).send('No timetables found')
         }
