@@ -3,13 +3,13 @@
 
 ## PROYECT DESCRIPTION
 
-Welcome to our app OrderLessons, a backend where we offer tutoring services for all types of students, where you can book with different teachers depending on the course and subjects you need. There is the possibility of receiving the classes online or in person.
+Welcome to our app Order Lessons, a backend where we offer tutoring services for all types of students, where you can book with different teachers depending on the course and subjects you need. There is the possibility of receiving the classes online or in person.
 
 Aquí podemos poner un enlace de la página
 
 ## TEAM
 - [Juan Yoel Betancor Martín](https://github.com/Yoel96 )
-- [Alexandra Mejías Hernandez](https://github.com/AlexandraMH93)
+- [Alexandra Mejías Herrera](https://github.com/AlexandraMH93)
 - [Musa Djiguel Camara](https://github.com/Musadjc)
 
 ## TECH
