@@ -1,7 +1,7 @@
 # API-order-lessons
-# School Proyect 2 OrderLessons
+# Project 2 - Order Lessons
 
-## PROYECT DESCRIPTION
+## PROJECT DESCRIPTION
 
 Welcome to our app Order Lessons, a backend project where we offer tutoring services for all types of students, where you can book with different teachers depending on the course and subjects you need. There is the possibility of receiving the classes online or in person.
 
