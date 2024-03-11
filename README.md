@@ -17,6 +17,8 @@ Welcome to our app Order Lessons, a backend project where we offer tutoring serv
 - ![Sequelize](https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=sequelize&logoColor=white) **Sequelize**
 - ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white) **MySQL**
 - ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black) **JavaScript (JS)**
+- https://img.shields.io/static/v1?style=for-the-badge&message=Postman&color=FF6C37&logo=Postman&logoColor=FFFFFF&label= **Postman**
+- 
 
 ## AUTHORIZATION
 - **Administrator Role**: The administrator role will have full access to the backend for configuration and maintenance. This means that he/she can modify functionality, query the database and problems with registration and login.
