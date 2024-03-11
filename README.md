@@ -18,7 +18,7 @@ Welcome to our app Order Lessons, a backend project where we offer tutoring serv
 - ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white) **MySQL**
 - ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black) **JavaScript (JS)**
 
-## AUTHTORIZATION
+## AUTHORIZATION
 - **Administrator Role**: The administrator role will have full access to the backend for configuration and maintenance. This means that he/she can modify functionality, query the database and problems with registration and login.
   
 - **Teacher**: The teacher role can enter the subjects and the level of the course he/she teaches and configure the available schedules, as well as cancel appointments and indicate whether they are face-to-face or online and their cost.
