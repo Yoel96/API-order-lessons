@@ -3,9 +3,8 @@
 
 ## PROYECT DESCRIPTION
 
-Welcome to our app Order Lessons, a backend where we offer tutoring services for all types of students, where you can book with different teachers depending on the course and subjects you need. There is the possibility of receiving the classes online or in person.
+Welcome to our app Order Lessons, a backend project where we offer tutoring services for all types of students, where you can book with different teachers depending on the course and subjects you need. There is the possibility of receiving the classes online or in person.
 
-Aquí podemos poner un enlace de la página
 
 ## TEAM
 - [Juan Yoel Betancor Martín](https://github.com/Yoel96 )
@@ -32,18 +31,17 @@ Aquí podemos poner un enlace de la página
 
 
  ## INSTALLATION
-To get started with the School Administration API, just get into the repo and run:
+To get started with the Order Lessons API, just get into the repo and run:
 ``` npm i ```
 
 # USAGE
 
-Create .env file to your own settings. To start the api server just run:
+Use .env.example to create .env file with your own settings. To start the api server just run:
 
-``` node index.js```
+``` npm run start```
 
 ## DATA STRUCTURE AND MODELS
-
-![image](https://media.discordapp.net/attachments/1211650846304239658/1215599284741738516/image.png?ex=65fd560e&is=65eae10e&hm=583a27755d250b72d013be1a8a3a5b9dfcb48e4ec0116236e140ea1b79e78dcc&=&format=webp&quality=lossless&width=1357&height=607)
+![Screenshot from 2024-03-08 10-02-23](https://github.com/Yoel96/API-order-lessons/assets/145113052/7e3ee3cb-8d5f-4272-baac-4b04c2213169)
 
 
 ### RELATIONS
@@ -96,10 +94,10 @@ Create .env file to your own settings. To start the api server just run:
 <details>
 <summary>:point_right: Student Favourites</summary>
 
-| METHOD | ENDPOINT                  | TOKEN  | ROLE         | DESCRIPTION                               | POST PARAMS                | RETURNS                        |
-| ------ | ------------------------- | ------ | ------------ | ----------------------------------------- | -------------------------- | -------------------------------|
-| GET    | /favouriteTeacher/        | YES    | student        | Gets all classrooms                       | -                          | [{ booking }]                  |
-| POST   | /favouriteTeacher/        | YES    | student        | Creates a classroom                       | -                          | Classroom created sucessfully  |
+| METHOD | ENDPOINT                      | TOKEN  | ROLE           | DESCRIPTION                               | POST PARAMS                | RETURNS                        |
+| ------ | -------------------------     | ------ | ------------   | ----------------------------------------- | -------------------------- | -------------------------------|
+| GET    | /favouriteTeacher/            | YES    | student        | Gets all classrooms                       | -                          | [{ booking }]                  |
+| POST   | /favouriteTeacher/            | YES    | student        | Creates a classroom                       | -                          | Classroom created sucessfully  |
 | DELETE | /favouriteTeacher/:teacher_id | YES    | student        | Deletes a specific classroom              | classroom_id               | Classroom deleted sucessfully  |
 
 </details>
@@ -127,7 +125,7 @@ Create .env file to your own settings. To start the api server just run:
 
 | METHOD | ENDPOINT                  | TOKEN  | ROLE         | DESCRIPTION                               | POST PARAMS                | RETURNS                           |
 | ------ | ------------------------- | ------ | ------------ | ----------------------------------------- | -------------------------- | --------------------------------- |
-| GET    | /teacherClassDate/        | YES    | Teacher      | Updates a specific teacher                | teacher_id                 | Teacher updated successfully      |
+| GET    | /teacherClassDate/        | YES    | Teacher      | Updates a specific teacher                | -                          | Teacher updated successfully      |
 
 
 </details>
@@ -160,6 +158,6 @@ Create .env file to your own settings. To start the api server just run:
 | ------ | ------------------------- | ------ | ------------ | ----------------------------------------- | -------------------------- | --------------------------------- |
 | GET    | /subject/                 | YES    | teacher      | Gets all teachers                         | -                          | [{ teachers }]                    |
 | POST   | /subject/                 | YES    | teacher      | Creates a teacher                         | -                          | Teacher created sucessfully       |
-| DELETE | /subject/                 | YES    | teacher      | Deletes a specific teacher                | teacher_id                 | Teacher deleted sucessfully       |
+| DELETE | /subject/                 | YES    | teacher      | Deletes a specific teacher                | -                          | Teacher deleted sucessfully       |
 
 </details>
