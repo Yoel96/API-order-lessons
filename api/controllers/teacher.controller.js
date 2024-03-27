@@ -8,7 +8,7 @@ async function getAllTeachers(req, res) {
         if (!Object.values(req.query).length) {
             const teacher = await Teacher.findAll({ include: { model: User} })
             if (teacher) {
-                 
+                
                 return res.status(200).json(teacher)
             } else {
                 return res.status(404).send('No teacher found')
@@ -131,13 +131,9 @@ const teacherAddSubject = async (req, res) => {
         const lessonType = await LessonType.create({ name: req.body.lessonName })
         const subject = await Subject.findByPk(parseInt(req.body.subject_id))
         if (!subject) return res.status(400).send("Subject not found")
-
         await subject.addLesson_type(lessonType)
         await teacher.addLesson_type(lessonType)
-
         res.status(200).send("Teacher added to Subject and LessonType")
-
-
     } catch (error) {
         res.status(500).send(error.message)
     }

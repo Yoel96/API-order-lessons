@@ -90,14 +90,12 @@ async function createLessonType(req, res) {
 
         const subject= await Subject.findByPk(parseInt(req.body.subject_id))
         const teacher= await Teacher.findByPk(parseInt(req.body.teacher_id))
-        console.log(lessonType)
         await subject.addLesson_type(lessonType)
         await teacher.addLesson_type(lessonType)
 
       }
       return res.status(200).json({ message: 'LessonType created', lessonType: lessonType })
     } catch (error) {
-      console.log(error)
       return res.status(500).send(error.message)
     }
   }

@@ -8,8 +8,9 @@ const LessonType = sequelize.define('lesson_type', {
       primaryKey:true,
       unique:true,
       autoIncrement: true,
-     
+      allowNull: false
 
+     
    },
    
    name:  {

@@ -84,8 +84,6 @@ async function updateSubject(req, res) {
 async function deleteSubject(req, res) {
   try {
 
-
-
     const subject = await Subject.findByPk(parseInt(req.params.id))
     if(!subject) return res.status(404).send('subject not found')
     const deletedSubject = await subject.destroy()

@@ -1,8 +1,7 @@
 const ClassDate = require('../models/classDate.model')
-const User = require('../models/user.model')
 const Timetable = require('../models/timetable.model')
-const nodemailer = require('nodemailer');
 const Teacher = require('../models/teacher.model');
+const sendEmailtoTeacher = require('./email.controller')
 
 async function getAllClassDates(req, res) {
     try {
@@ -11,7 +10,7 @@ async function getAllClassDates(req, res) {
             return res.status(200).json(classDates)
         } else {
             return res.status(404).send('No classDates found')
-        }
+        } 
     } catch (error) {
         res.status(500).send(error.message)
     }
@@ -87,8 +86,7 @@ async function deleteClassDate(req, res) {
             return res.status(200).json('ClassDate deleted')
         } else {
             return res.status(404).send('ClassDate not found')
-            const nodemailer = require('nodemailer');
-        }
+         }
     } catch (error) {
         return res.status(500).send(error.message)
     }
@@ -134,36 +132,6 @@ async function getClassDatesByTeacher(req, res) {
 }
 
 
-
-const sendEmailtoTeacher = async (teacher, student, timetable) => {
-
-    const userInfo = await User.findByPk(parseInt(teacher.dataValues.user_Id))
-
-    const transporter = nodemailer.createTransport({
-        service: process.env.MAIL_SERVICE,
-        auth: {
-            user: process.env.MAIL_USER,
-            pass: process.env.MAIL_PASS
-        }
-    });
-
-    const mailOptions = {
-        from: process.env.MAIL_USER,
-        to: userInfo.dataValues.email,
-        subject: 'You have a new classdate from a student',
-        text: `The student ${student.dataValues.firstName} ordered a lesson, the lesson will be in ${timetable.dataValues.date} at ${timetable.dataValues.time}`
-    };
-
-    await transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-
-        }
-    });
-
-}
 
 
 module.exports = {

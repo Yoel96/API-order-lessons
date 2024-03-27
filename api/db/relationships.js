@@ -36,8 +36,8 @@ const DBRelationships = async() =>{
 
          
          
-        Teacher.belongsToMany(Subject, { through: LessonType });
-        Subject.belongsToMany(Teacher, { through: LessonType });
+        Teacher.belongsToMany(Subject, { through: LessonType , unique: false });
+        Subject.belongsToMany(Teacher, { through: LessonType , unique: false });
         Teacher.hasMany(LessonType);
         LessonType.belongsTo(Teacher);
         Subject.hasMany(LessonType);

@@ -20,6 +20,7 @@
     "morgan": "^1.10.0",
     "mysql2": "^3.9.2",
     "nodemailer": "^6.9.12",
+    "nodemailer-express-handlebars": "^6.1.2",
     "sequelize": "^6.37.1"
   }
 }
