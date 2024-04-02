@@ -5,7 +5,7 @@ const DBRelationships = require('./api/db/relationships')
 const app= express()
 
 const startServer = async()=>{
-
+    app.use(cors())
     app.use(express.json())
     app.use('/api', require('./api/routes/index.js'))
     app.listen(process.env.PORT, async (err)=>{
