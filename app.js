@@ -3,6 +3,7 @@ const express= require('express')
 const {dbSync, dbCheck} = require('./api/db/sync')
 const DBRelationships = require('./api/db/relationships')
 const app= express()
+const cors = require('cors')
 
 const startServer = async()=>{
     app.use(cors())
