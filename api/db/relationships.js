@@ -34,6 +34,8 @@ const DBRelationships = async() =>{
         User.hasMany(ClassDate, { foreignKey:"student_id"})
         ClassDate.belongsTo(User , {as:"userId",foreignKey:"student_id"})
 
+        Subject.hasMany(ClassDate  )
+        ClassDate.belongsTo(Subject   )
          
          
         Teacher.belongsToMany(Subject, { through: LessonType });

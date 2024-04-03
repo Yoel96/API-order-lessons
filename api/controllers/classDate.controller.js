@@ -1,6 +1,7 @@
 const ClassDate = require('../models/classDate.model')
 const User = require('../models/user.model')
 const Timetable = require('../models/timetable.model')
+const Subject = require('../models/subject.model')
 
 async function getAllClassDates(req, res) {
     try {
@@ -31,12 +32,15 @@ async function getOneClassDate(req, res) {
 async function createClassDate(req, res) {
     try {
         const timetable = await Timetable.findByPk(parseInt(req.body.timeTable_Id))
-        if (timetable) {
+        const subject= await Subject.findByPk(parseInt(req.body.subject_Id))
+        if (timetable && subject) {
             const studentClass = await timetable.getClass_date()
              if (!studentClass) { //si el horario disponible no tiene una reserva asociada
                 const classDate = await ClassDate.create({
                     comments: req.body.comments
                 })
+                console.log(subject)
+                subject.addClass_date(classDate)
                 await res.locals.user.addClass_date(classDate)
                 await timetable.setClass_date(classDate)
                 return res.status(200).json('ClassDate created')

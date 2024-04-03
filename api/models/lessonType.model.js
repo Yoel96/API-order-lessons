@@ -10,12 +10,7 @@ const LessonType = sequelize.define('lesson_type', {
       autoIncrement: true,
      
 
-   },
-   
-   name:  {
-    type: DataTypes.STRING,
-    allowNull: false
-   }
+   } 
 })
 
 

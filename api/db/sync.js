@@ -20,7 +20,7 @@ const dbCheck = async () => {
 
 const dbSync = async () => {
     try {
-        sequelize.sync({force:true})
+        sequelize.sync({alter:true})
        
     } catch (err) {
         throw new Error(err)
