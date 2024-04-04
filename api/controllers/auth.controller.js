@@ -39,7 +39,7 @@ const login = async (req, res)=>{
             if(result) {
                 
                 const token = jwt.sign({ email: req.body.email, role: user.dataValues.role   }, process.env.JWT_SECRET)
-                return res.status(200).json(token)
+                return res.status(200).json({token: token, role: user.dataValues.role })
             }
             res.status(400).send("Invalid password")
 
