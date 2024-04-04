@@ -119,9 +119,15 @@ async function getClassDatesByTeacher(req, res) {
             where: {
                 teacher_id : teacher.dataValues.id
             },
-            include:{
+            include:[{
                 model: ClassDate
+            },
+            {
+                model: Subject
+            },{
+                model: User
             }
+        ]
         })
         return res.status(200).json(result)
 
