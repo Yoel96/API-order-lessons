@@ -131,10 +131,12 @@ const teacherAddSubject = async (req, res) => {
     try {
         
         const teacher = await res.locals.user.getTeacher_info()
+        const lessonType = await LessonType.create({ name: "" })
         const subject = await Subject.findByPk(parseInt(req.body.subject_id))
         if (!subject) return res.status(400).send("Subject not found")
 
-        await teacher.addSubject(subject)
+        await subject.addLesson_type(lessonType)
+        await teacher.addLesson_type(lessonType)
 
         res.status(200).send("Teacher added to Subject and LessonType")
 
