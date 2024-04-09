@@ -209,10 +209,8 @@ const getTeachersByDate = async (req, res) => {
                 include: {
                     model: User,
                     as: "userId"
-                },
-                include:{
-                    model: Subject
                 }
+                
             }
         })
          
