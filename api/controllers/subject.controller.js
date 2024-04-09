@@ -1,6 +1,7 @@
 const Subject = require('../models/subject.model.js')
 const Teacher = require('../models/teacher.model.js')
 const LessonType = require('../models/lessonType.model.js')
+const TimeTable = require('../models/timetable.model.js')
 
 
 async function getAllSubjects(req, res) {
@@ -59,7 +60,7 @@ async function createSubject(req, res) {
   } catch (error) {
     return res.status(500).send(error.message)
   }
-}
+} 
 
 async function updateSubject(req, res) {
   try {
@@ -83,9 +84,6 @@ async function updateSubject(req, res) {
 
 async function deleteSubject(req, res) {
   try {
-
-
-
     const subject = await Subject.findByPk(parseInt(req.params.id))
     if(!subject) return res.status(404).send('subject not found')
     const deletedSubject = await subject.destroy()
@@ -124,9 +122,7 @@ async function getSubjectsByLessonTypeName(req, res) {
 
 async function getSubjectsByTeacher(req, res) {
   try {
-
     const teacher = await Teacher.findByPk(parseInt(req.params.id))
-
     if (teacher) {
       const subjects = await teacher.getSubjects()
       if (subjects) {
@@ -136,11 +132,38 @@ async function getSubjectsByTeacher(req, res) {
       }
     }
     res.status(404).send('Teacher not found')
-
   } catch (error) {
     return res.status(500).send(error.message)
   }
 }
+
+
+async function getAvailableSubject(req, res) {
+  try {
+    
+    const timeTable = await TimeTable.findAll(
+      {include:{
+        model:Teacher,
+        as:"teacherId",
+        include:{
+          model:Subject
+        }
+      }}
+    )
+      
+      if (timeTable) {
+        return res.status(200).json(timeTable)
+      } else {
+        return res.status(404).send('Subjects not found')
+      }
+    }
+  
+    catch (error) {
+     return res.status(500).send(error.message)
+  }
+}
+
+
 
 module.exports = {
   getAllSubjects,
@@ -150,5 +173,6 @@ module.exports = {
   deleteSubject,
   getSubjectsByLessonTypeName,
   getSubjectsByTeacher,
+  getAvailableSubject
 
 }
