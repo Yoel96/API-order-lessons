@@ -127,7 +127,13 @@ async function getTimetableBysubject(req, res) {
     const timeTables= []
     for(const teacher of teachers){
       timeTable= await teacher.getTimetables()
-      timeTables.push(timeTable)
+      for (const time of timeTable){
+
+        const classDate = await time.getClass_date()
+        if (!classDate) timeTables.push(time)
+
+      }
+   
     }
 
     res.status(200).json(timeTables)
