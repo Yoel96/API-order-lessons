@@ -129,7 +129,7 @@ const getTeacherSubject = async (req, res) => {
 const teacherAddSubject = async (req, res) => {
 
     try {
-        subject
+        
         const teacher = await res.locals.user.getTeacher_info()
         const lessonType = await LessonType.create({ name: req.body.lessonName })
         const subject = await Subject.findByPk(parseInt(req.body.subject_id))
@@ -142,7 +142,7 @@ const teacherAddSubject = async (req, res) => {
 
 
     } catch (error) {
-        subject
+        
         res.status(500).send(error.message)
     }
 
@@ -154,7 +154,7 @@ const teacherAddSubject = async (req, res) => {
 const teacherRemoveSubject = async (req, res) => {
 
     try {
-        TimeTable
+        
         const teacher = await res.locals.user.getTeacher_info()
 
         const subject = await Subject.findByPk(parseInt(req.params.id))
