@@ -75,7 +75,7 @@ async function updateTeacher(req, res) {
         if (teacherExist !== 0) {
             return res.status(200).json({ message: 'Teacher updated', teacher: teacher })
         } else {
-            Teacher
+            
             return res.status(404).send('Teacher not found')
         }
     } catch (error) {
@@ -202,9 +202,7 @@ const getTeachersByDate = async (req, res) => {
     try {
 
         const timeTable = await TimeTable.findAll({
-            where: req.body
-
-            ,
+            where: req.body,
             include: {
                 model: Teacher,
                 as: "teacherId",
