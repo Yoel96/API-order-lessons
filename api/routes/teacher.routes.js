@@ -1,9 +1,11 @@
 const router = require('express').Router()
 const {checkRole, checkAuth} = require('../middlewares/auth.middleware')
-const { getAllTeachers, getOneTeacher, updateTeacher, deleteTeacher, getTeachersBySubject   } = require('../controllers/teacher.controller')
+const { getAllTeachers, getOneTeacher, updateTeacher, deleteTeacher, getTeachersBySubject  ,getTeachersByDate } = require('../controllers/teacher.controller')
 
 
 router.get('/', checkAuth,(req,res,next)=>{checkRole(req, res,next,["admin","student"])}, getAllTeachers)
+router.post('/date', checkAuth,(req,res,next)=>{checkRole(req, res,next,["admin","student"])}, getTeachersByDate)
+
 router.get('/subject/:subject_id', checkAuth,(req,res,next)=>{checkRole(req, res,next,["admin","student"])}, getTeachersBySubject)
 router.get('/:id', checkAuth,(req,res,next)=> {checkRole(req, res,next,["admin","student"])},  getOneTeacher)
 router.put('/:id', checkAuth,(req,res,next)=> {checkRole(req, res,next,["admin"])},  updateTeacher)
