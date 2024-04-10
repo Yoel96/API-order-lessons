@@ -101,11 +101,10 @@ async function TeacherupdateTimetable(req, res) {
 
 async function TeacherDeleteTimetable(req, res) {
 try {
-  const teacher = await res.locals.user.getTeacher_info()
     const timetable = await Timetable.destroy({
     where: {
         id: req.params.id,
-        teacher_id:teacher.dataValues.id
+        
     }
     }) 
     if (timetable) {
