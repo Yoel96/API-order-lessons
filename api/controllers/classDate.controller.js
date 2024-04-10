@@ -41,7 +41,7 @@ async function createClassDate(req, res) {
                 const classDate = await ClassDate.create({
                     comments: req.body.comments
                 })
-                console.log(subject)
+              
                 subject.addClass_date(classDate)
                 await res.locals.user.addClass_date(classDate)
                 await timetable.setClass_date(classDate)
@@ -105,6 +105,7 @@ async function getClassDatesByStudentEmail(req, res) {
                 include:[{
                     model: Timetable,
                     as:"timetableId",
+                    order:[[{ raw: 'date + time DESC' }]],
                     include:{
                         model: Teacher,
                         as:"teacherId",
@@ -142,9 +143,20 @@ async function getClassDatesByTeacher(req, res) {
             where: {
                 teacher_id : teacher.dataValues.id
             },
-            include:{
-                model: ClassDate
+            include:[{
+                model: ClassDate,
+                include:[{
+                    model:User,
+                    as:"userId"
+                
+                },{
+                    model:Subject
+                    
+                
+                }
+            ]
             }
+        ]
         })
         return res.status(200).json(result)
 

@@ -33,7 +33,7 @@ router.get('/ratings/student/', checkAuth, (req, res, next) => { checkRole(req, 
 router.put('/teacher/', checkAuth, (req, res, next) => { checkRole(req, res, next, ["teacher"]) }, updateTeacherProfile) 
 
 // teacher classDates
-router.get('/teacherClassDate/', checkAuth, (req, res, next) => { checkRole(req, res, next, ["teacher"]) }, getClassDatesByTeacher)
+router.get('/teacherClassDate/', checkAuth, (req, res, next) => { checkRole(req, res, next, ["teacher", "student"]) }, getClassDatesByTeacher)
 
 // teacher timetable
 router.get('/timeTable/', checkAuth, (req, res, next) => { checkRole(req, res, next, ["teacher"]) }, TeacherTimetable)
