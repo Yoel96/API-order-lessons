@@ -102,14 +102,21 @@ async function getClassDatesByStudentEmail(req, res) {
                 where: {
                     student_id: res.locals.user.id
                 },
-                include:{
+                include:[{
                     model: Timetable,
                     as:"timetableId",
                     include:{
                         model: Teacher,
                         as:"teacherId"
                     }
-                } 
+                } , {
+                    model:Subject
+                }, {
+                    model:User,
+                    as:"userId"
+                }
+            
+            ]
             
 
             }) 
