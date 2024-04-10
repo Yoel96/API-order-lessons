@@ -39,7 +39,7 @@ router.get('/teacherClassDate/', checkAuth, (req, res, next) => { checkRole(req,
 router.get('/timeTable/', checkAuth, (req, res, next) => { checkRole(req, res, next, ["teacher"]) }, TeacherTimetable)
 router.post('/timeTable/', checkAuth, (req, res, next) => { checkRole(req, res, next, ["teacher"]) }, TeacherCreateTimetable)
 router.put('/timeTable/:id', checkAuth, (req, res, next) => { checkRole(req, res, next, ["teacher"]) }, TeacherupdateTimetable)
-router.delete('/timeTable/:id', checkAuth, (req, res, next) => { checkRole(req, res, next, ["teacher"]) }, TeacherDeleteTimetable)
+router.delete('/timeTable/:id', checkAuth, (req, res, next) => { checkRole(req, res, next, ["student","teacher"]) }, TeacherDeleteTimetable)
 
 // teacher ratings
 router.get('/ratings/teacher/', checkAuth, (req, res, next) => { checkRole(req, res, next, ["student", "teacher", "admin"]) }, getTeacherRatings)
