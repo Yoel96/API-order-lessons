@@ -1,5 +1,7 @@
 const ClassDate = require('../models/classDate.model')
 const User = require('../models/user.model')
+const Teacher = require('../models/teacher.model')
+
 const Timetable = require('../models/timetable.model')
 const Subject = require('../models/subject.model')
 
@@ -96,9 +98,22 @@ async function getClassDatesByStudentEmail(req, res) {
 
         const student = res.locals.user
         if (student) {
-            const classDates = await student.getClass_dates()
+             const classDates = await ClassDate.findAll({
+                where: {
+                    student_id: res.locals.user.id
+                },
+                include:{
+                    model: Timetable,
+                    as:"timetableId",
+                    include:{
+                        model: Teacher,
+                        as:"teacherId"
+                    }
+                } 
+            
 
-            if (classDates.length > 0) {
+            }) 
+             if (classDates.length > 0) {
                 return res.status(200).json(classDates)
             } else {
                 return res.status(400).send('classDate not found')
