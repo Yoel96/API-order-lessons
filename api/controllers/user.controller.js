@@ -83,6 +83,19 @@ const updateUser= async (req,res)=>{
 
 }
 
+const getProfile = async (req , res )=>{
+
+
+  try {
+    const user= res.locals.user
+     res.status(200).send(user)
+  } catch (error) {
+      res.status(500).send(error.message)
+  }
+  
+  }
+  
+
 
 const updateProfile = async (req,res)=>{
     try{
@@ -127,4 +140,4 @@ try {
 
 }
 
-module.exports= {getAllUsers, getUser, deleteUser, updateUser, updateProfile, deleteProfile}
+module.exports= {getAllUsers, getUser, deleteUser, updateUser, updateProfile, deleteProfile, getProfile}

@@ -9,6 +9,7 @@ const { updateTeacherProfile, teacherAddSubject, teacherRemoveSubject, getTeache
 const { updateProfile , deleteProfile} = require('../controllers/user.controller')
 
 //change user info
+router.get('/', checkAuth, (req, res, next) => { checkRole(req, res, next, ["student", "teacher"]) }, getProfile)
 router.put('/', checkAuth, (req, res, next) => { checkRole(req, res, next, ["student", "teacher"]) }, updateProfile)
 router.delete('/', checkAuth, (req, res, next) => { checkRole(req, res, next, ["student", "teacher"]) }, deleteProfile)
 
