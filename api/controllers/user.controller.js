@@ -88,7 +88,9 @@ const getProfile = async (req , res )=>{
 
   try {
     const user= res.locals.user
-     res.status(200).send(user)
+    let teacher= await user.getTeacher_info()
+    if(!teacher) teacher=""
+     res.status(200).send({userInfo:user, teacher:teacher})
   } catch (error) {
       res.status(500).send(error.message)
   }

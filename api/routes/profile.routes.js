@@ -6,7 +6,7 @@ const { getStudentTeachersFavourites, createFavouriteTeacherStudent, deleteFavou
 const { TeacherCreateTimetable, TeacherupdateTimetable, TeacherDeleteTimetable, TeacherTimetable } = require('../controllers/timetable.contoller')
 const { getTeacherRatings, getUserRatings } = require('../controllers/teacherRatings.controller')
 const { updateTeacherProfile, teacherAddSubject, teacherRemoveSubject, getTeacherSubject } = require('../controllers/teacher.controller')
-const { updateProfile , deleteProfile} = require('../controllers/user.controller')
+const { updateProfile , deleteProfile, getProfile} = require('../controllers/user.controller')
 
 //change user info
 router.get('/', checkAuth, (req, res, next) => { checkRole(req, res, next, ["student", "teacher"]) }, getProfile)
