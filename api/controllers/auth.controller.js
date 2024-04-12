@@ -18,7 +18,7 @@ const signUp = async (req, res)=>{
 
         res.locals.user=user
         
-        res.status(200).json({token: token, role: body.role })
+        res.status(200).json({token: token, role: body.role, image: user.dataValues.profileImage })
 
 
     } catch (error) {
@@ -39,7 +39,7 @@ const login = async (req, res)=>{
             if(result) {
                 
                 const token = jwt.sign({ email: req.body.email, role: user.dataValues.role   }, process.env.JWT_SECRET)
-                return res.status(200).json({token: token, role: user.dataValues.role })
+                return res.status(200).json({token: token, role: user.dataValues.role , image: user.dataValues.profileImage })
             }
             res.status(400).send("Invalid password")
 
