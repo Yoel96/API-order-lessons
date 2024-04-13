@@ -110,13 +110,10 @@ const updateProfile = async (req,res)=>{
       req.body.userInfo.password = await  bcrypt.hash(req.body.userInfo.password, genSalt)
       
     } 
-    let token =""
-    if(req.body.userInfo.email != res.locals.user.dataValues.email){
+    let token=jwt.sign({ email:req.body.userInfo.email, role: req.body.userInfo.role  }, process.env.JWT_SECRET )
+   
+     
 
-
-      token = jwt.sign({ email:req.body.userInfo.email, role: req.body.userInfo.role  }, process.env.JWT_SECRET )
-
-    }
 
      await user.update(req.body.userInfo )
      if(req.body.teacherInfo){
