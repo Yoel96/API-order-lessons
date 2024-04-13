@@ -1,4 +1,6 @@
 const User= require('../models/user.model.js')
+const Teacher= require('../models/teacher.model.js')
+
 const bcrypt = require('bcrypt')
 const jwt= require("jsonwebtoken")
 
@@ -105,19 +107,21 @@ const updateProfile = async (req,res)=>{
     if(req.body.hasOwnProperty("password")){
 
       const genSalt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT))
-      req.body.password = await  bcrypt.hash(req.body.password, genSalt)
+      req.body.userInfo.password = await  bcrypt.hash(req.body.userInfo.password, genSalt)
       
     } 
     let token =""
-    if(req.body.email != res.locals.user.dataValues.email){
+    if(req.body.userInfo.email != res.locals.user.dataValues.email){
 
 
-      token = jwt.sign({ email:req.body.email, role: req.body.role  }, process.env.JWT_SECRET )
+      token = jwt.sign({ email:req.body.userInfo.email, role: req.body.userInfo.role  }, process.env.JWT_SECRET )
 
     }
 
-     await user.update(req.body )
-    
+     await user.update(req.body.userInfo )
+     if(req.body.teacherInfo){
+     await Teacher.update(req.body.teacherInfo)
+     }
     res.status(200).json(token)
     }
     catch(error){
