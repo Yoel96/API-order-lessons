@@ -120,7 +120,7 @@ const updateProfile = async (req,res)=>{
 
      await user.update(req.body.userInfo )
      if(req.body.teacherInfo){
-     await Teacher.update(req.body.teacherInfo)
+     await Teacher.update(req.body.teacherInfo , {where:{id:req.body.teacherInfo.id}})
      }
     res.status(200).json(token)
     }
